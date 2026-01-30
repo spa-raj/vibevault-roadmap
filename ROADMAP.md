@@ -44,11 +44,19 @@ Based on the PRD/HLD and current progress.
     - [When to Start Applying](#when-to-start-applying)
     - [Application Preparation Checklist](#application-preparation-checklist)
     - [Target Roles & Expected CTC](#target-roles--expected-ctc)
-16. [Capstone Project Report (Master's Degree)](#capstone-project-report-masters-degree)
+16. [Optional: DevOps Skills Enhancement](#optional-devops-skills-enhancement-if-time-permits) *(+60 hours)*
+    - [Helm Charts](#optional-module-1-helm-charts-6-hours) (6 hrs)
+    - [ArgoCD GitOps](#optional-module-2-argocd-gitops-8-hours) (8 hrs)
+    - [Ansible Basics](#optional-module-3-ansible-basics-10-hours) (10 hrs)
+    - [ELK Stack](#optional-module-4-elk-stack---centralized-logging-8-hours) (8 hrs)
+    - [Service Mesh - Istio](#optional-module-5-service-mesh---istio-10-hours) (10 hrs)
+    - [Advanced Scripting](#optional-module-6-advanced-scripting-8-hours) (8 hrs)
+    - [Linux Administration](#optional-module-7-linux-administration-10-hours) (10 hrs)
+17. [Capstone Project Report (Master's Degree)](#capstone-project-report-masters-degree)
     - [Report Requirements](#report-requirements)
     - [Report Structure & Tasks](#report-structure--tasks)
     - [Report Timeline](#report-timeline)
-17. [References](#references)
+18. [References](#references)
 
 ---
 
@@ -1152,6 +1160,323 @@ Month 4:
 | Senior Backend Engineer | Flipkart, Razorpay, CRED | ₹30-50 LPA |
 | SDE-2/SDE-3 | Amazon, Microsoft, Google | ₹35-60 LPA |
 | Staff Engineer | High-growth startups | ₹40-70 LPA |
+
+---
+
+## Optional: DevOps Skills Enhancement (If Time Permits)
+
+The core roadmap covers ~60-70% of DevOps skills. Complete these optional modules to become a strong **DevOps Engineer** or **Platform Engineer** candidate.
+
+### DevOps Readiness After Core Roadmap
+
+| DevOps Domain | Coverage | Status |
+|---------------|----------|--------|
+| Containerization (Docker) | Full | ✅ Ready |
+| Orchestration (Kubernetes) | Full | ✅ Ready |
+| IaC (Terraform) | Full | ✅ Ready |
+| CI/CD (Jenkins) | Full | ✅ Ready |
+| Cloud (AWS) | Full | ✅ Ready |
+| Monitoring (Prometheus/Grafana) | Full | ✅ Ready |
+| GitOps (ArgoCD) | Stretch goal | ⚠️ Basic |
+| Config Management (Ansible) | Not covered | ❌ Gap |
+| Service Mesh (Istio) | Not covered | ❌ Gap |
+| Centralized Logging (ELK) | Not covered | ❌ Gap |
+| Helm Charts | Not covered | ❌ Gap |
+| Advanced Scripting | Not covered | ❌ Gap |
+
+### Optional Module 1: Helm Charts (6 hours)
+
+Convert Kubernetes manifests to Helm charts for better package management.
+
+| Task | Hours | Description |
+|------|-------|-------------|
+| Helm fundamentals | 2 | KodeKloud or official docs |
+| Create userservice chart | 1.5 | Chart.yaml, values.yaml, templates/ |
+| Create productservice chart | 1.5 | Parameterize environment-specific values |
+| Test with `helm install` | 1 | Deploy to Minikube/EKS |
+
+**Deliverable:**
+```
+/helm
+  /userservice
+    Chart.yaml
+    values.yaml
+    templates/
+      deployment.yaml
+      service.yaml
+      configmap.yaml
+  /productservice
+    ...
+```
+
+**Resources:**
+- [Helm Official Docs](https://helm.sh/docs/)
+- [KodeKloud Helm Course](https://kodekloud.com/)
+
+---
+
+### Optional Module 2: ArgoCD GitOps (8 hours)
+
+> Note: This is already mentioned as a stretch goal in Week 6. Complete it to strengthen DevOps profile.
+
+| Task | Hours | Description |
+|------|-------|-------------|
+| ArgoCD fundamentals | 2 | GitOps concepts, architecture |
+| Install ArgoCD on EKS | 2 | Helm install + ingress setup |
+| Create GitOps repository | 2 | Separate repo for K8s manifests |
+| Configure Applications | 2 | Auto-sync for all microservices |
+
+**Architecture:**
+```
+Code Repo                    GitOps Repo                 EKS Cluster
+─────────                    ───────────                 ───────────
+Push code
+    │
+    ▼
+Jenkins (CI)
+    │
+    ├── Build + Test
+    ├── Push to ECR
+    └── Update image tag ───▶ K8s manifests ◀─── ArgoCD watches
+                                                       │
+                                                       ▼
+                                               Auto-deploy to EKS
+```
+
+**Resources:**
+- [ArgoCD Getting Started](https://argo-cd.readthedocs.io/en/stable/getting_started/)
+- [GitOps with ArgoCD - TechWorld with Nana](https://www.youtube.com/watch?v=MeU5_k9ssrs)
+
+---
+
+### Optional Module 3: Ansible Basics (10 hours)
+
+Configuration management for EC2 instances and initial server setup.
+
+| Task | Hours | Description |
+|------|-------|-------------|
+| Ansible fundamentals | 3 | KodeKloud Ansible Basics |
+| Inventory and playbooks | 2 | Define hosts, write first playbook |
+| Jenkins server setup playbook | 2 | Automate Jenkins + Docker install |
+| Roles and best practices | 2 | Organize playbooks into roles |
+| Test on EC2 | 1 | Provision and configure real instance |
+
+**Deliverable:**
+```yaml
+# playbooks/setup-jenkins.yml
+---
+- hosts: jenkins_server
+  become: yes
+  roles:
+    - common
+    - java
+    - docker
+    - jenkins
+
+# roles/jenkins/tasks/main.yml
+- name: Add Jenkins repository key
+  apt_key:
+    url: https://pkg.jenkins.io/debian/jenkins.io.key
+    state: present
+
+- name: Install Jenkins
+  apt:
+    name: jenkins
+    state: present
+```
+
+**Resources:**
+- [KodeKloud Ansible for Beginners](https://kodekloud.com/)
+- [Ansible Official Docs](https://docs.ansible.com/)
+- [Jeff Geerling's Ansible 101](https://www.youtube.com/playlist?list=PL2_OBreMn7FqZkvMYt6ATmgC0KAGGJNAN)
+
+---
+
+### Optional Module 4: ELK Stack - Centralized Logging (8 hours)
+
+Ship logs from all microservices to Elasticsearch for centralized analysis.
+
+| Task | Hours | Description |
+|------|-------|-------------|
+| ELK architecture | 1 | Elasticsearch + Logstash + Kibana |
+| Deploy ELK on Docker/K8s | 2 | Use Elastic Helm charts |
+| Configure Filebeat/Fluentd | 2 | Ship logs from all services |
+| Create Kibana dashboards | 2 | Visualize logs, create alerts |
+| Integrate with Spring Boot | 1 | Structured JSON logging |
+
+**Architecture:**
+```
+┌─────────────┐     ┌─────────────┐     ┌─────────────┐
+│ User Service│     │Product Svc  │     │ Cart Service│
+└──────┬──────┘     └──────┬──────┘     └──────┬──────┘
+       │                   │                   │
+       └───────────────────┼───────────────────┘
+                           │
+                    ┌──────▼──────┐
+                    │  Fluentd /  │
+                    │  Filebeat   │
+                    └──────┬──────┘
+                           │
+                    ┌──────▼──────┐
+                    │Elasticsearch│
+                    └──────┬──────┘
+                           │
+                    ┌──────▼──────┐
+                    │   Kibana    │
+                    └─────────────┘
+```
+
+**Resources:**
+- [Elastic Stack on Kubernetes](https://www.elastic.co/guide/en/cloud-on-k8s/current/index.html)
+- [Fluentd Kubernetes Logging](https://docs.fluentd.org/container-deployment/kubernetes)
+
+---
+
+### Optional Module 5: Service Mesh - Istio (10 hours)
+
+Advanced traffic management, security (mTLS), and observability.
+
+| Task | Hours | Description |
+|------|-------|-------------|
+| Service mesh concepts | 2 | Sidecar proxy, control plane |
+| Install Istio on EKS | 2 | istioctl or Helm |
+| Enable sidecar injection | 1 | Label namespaces |
+| Traffic management | 2 | Canary deployments, traffic splitting |
+| mTLS and security | 2 | Zero-trust networking |
+| Observability (Kiali, Jaeger) | 1 | Distributed tracing |
+
+**Use Cases:**
+- Canary deployments (route 10% traffic to new version)
+- Circuit breaking between services
+- Mutual TLS without code changes
+- Distributed tracing across microservices
+
+**Resources:**
+- [Istio Official Docs](https://istio.io/latest/docs/)
+- [Istio by Example](https://istiobyexample.dev/)
+- [KodeKloud Istio Course](https://kodekloud.com/)
+
+---
+
+### Optional Module 6: Advanced Scripting (8 hours)
+
+Python/Bash scripts for automation tasks.
+
+| Task | Hours | Description |
+|------|-------|-------------|
+| Bash scripting deep dive | 3 | Loops, functions, error handling |
+| Python for DevOps | 3 | boto3, subprocess, automation |
+| Write utility scripts | 2 | Deploy script, health check, cleanup |
+
+**Example Scripts:**
+```bash
+#!/bin/bash
+# scripts/deploy.sh - Blue-green deployment helper
+set -e
+
+SERVICE=$1
+NEW_VERSION=$2
+
+echo "Deploying $SERVICE version $NEW_VERSION..."
+kubectl set image deployment/$SERVICE $SERVICE=ecr.aws/$SERVICE:$NEW_VERSION
+kubectl rollout status deployment/$SERVICE
+echo "Deployment complete!"
+```
+
+```python
+# scripts/health_check.py
+import boto3
+import requests
+
+def check_services():
+    services = ['userservice', 'productservice', 'cartservice']
+    for svc in services:
+        resp = requests.get(f'http://{svc}/actuator/health')
+        print(f"{svc}: {resp.json()['status']}")
+
+if __name__ == '__main__':
+    check_services()
+```
+
+**Resources:**
+- [Bash Scripting Tutorial](https://linuxconfig.org/bash-scripting-tutorial)
+- [Python for DevOps Book](https://www.oreilly.com/library/view/python-for-devops/9781492057680/)
+
+---
+
+### Optional Module 7: Linux Administration (10 hours)
+
+Strengthen fundamentals for troubleshooting and system administration.
+
+| Task | Hours | Description |
+|------|-------|-------------|
+| Linux Upskill Challenge | 6 | 20-day guided learning |
+| Performance troubleshooting | 2 | top, htop, iostat, netstat |
+| Systemd and services | 1 | Create custom services |
+| Security basics | 1 | SSH hardening, firewall rules |
+
+**Key Commands to Master:**
+```bash
+# Performance
+top / htop          # CPU and memory
+iostat              # Disk I/O
+netstat / ss        # Network connections
+df -h / du -sh      # Disk usage
+
+# Troubleshooting
+journalctl -u service   # Service logs
+dmesg                   # Kernel messages
+strace                  # System call tracing
+lsof                    # Open files
+
+# Networking
+ip addr / ifconfig      # Network interfaces
+curl / wget             # HTTP requests
+dig / nslookup          # DNS lookups
+tcpdump                 # Packet capture
+```
+
+**Resources:**
+- [Linux Upskill Challenge](https://linuxupskillchallenge.org/)
+- [Linux Journey](https://linuxjourney.com/)
+- [RHCSA Study Guide](https://www.redhat.com/en/services/certification/rhcsa)
+
+---
+
+### DevOps Skills Summary
+
+| Module | Hours | Priority | Impact |
+|--------|-------|----------|--------|
+| Helm Charts | 6 | High | K8s package management |
+| ArgoCD GitOps | 8 | High | Modern CI/CD |
+| Ansible | 10 | Medium | Config management |
+| ELK Stack | 8 | Medium | Observability |
+| Istio | 10 | Low | Advanced microservices |
+| Scripting | 8 | Medium | Automation |
+| Linux Admin | 10 | Medium | Troubleshooting |
+| **Total** | **60** | | |
+
+### Recommended Order (If Limited Time)
+
+```
+Must Do (14 hrs):     Helm + ArgoCD
+                      → Makes you stand out in DevOps interviews
+
+Should Do (18 hrs):   + Ansible + Scripting
+                      → Covers traditional DevOps gaps
+
+Nice to Have (28 hrs): + ELK + Linux Admin + Istio
+                       → Senior DevOps / SRE ready
+```
+
+### DevOps Roles After Optional Modules
+
+| Modules Completed | Roles You Qualify For | Expected CTC |
+|-------------------|----------------------|--------------|
+| Core only | DevOps Engineer (Junior/Mid) | ₹12-25 LPA |
+| + Helm + ArgoCD | DevOps Engineer (Mid) | ₹18-35 LPA |
+| + Ansible + Scripting | DevOps Engineer (Mid-Senior) | ₹25-45 LPA |
+| All modules | Senior DevOps / Platform / SRE | ₹35-60 LPA |
 
 ---
 
