@@ -52,11 +52,19 @@ Based on the PRD/HLD and current progress.
     - [Service Mesh - Istio](#optional-module-5-service-mesh---istio-10-hours) (10 hrs)
     - [Advanced Scripting](#optional-module-6-advanced-scripting-8-hours) (8 hrs)
     - [Linux Administration](#optional-module-7-linux-administration-10-hours) (10 hrs)
-17. [Capstone Project Report (Master's Degree)](#capstone-project-report-masters-degree)
+17. [SDE 2 Interview Preparation](#sde-2-interview-preparation-80-hours) *(~90 hours)*
+    - [Your Profile Positioning](#your-profile-positioning)
+    - [DSA Preparation Track](#dsa-preparation-track-40-hours) (40 hrs)
+    - [High Level Design Practice](#high-level-design-practice-20-hours) (20 hrs)
+    - [Low Level Design Practice](#low-level-design-practice-10-hours) (10 hrs)
+    - [Behavioral Preparation](#behavioral-preparation-10-hours) (10 hrs)
+    - [Mock Interview Schedule](#mock-interview-schedule-10-hours) (10 hrs)
+    - [Resume Positioning](#resume-positioning)
+18. [Capstone Project Report (Master's Degree)](#capstone-project-report-masters-degree)
     - [Report Requirements](#report-requirements)
     - [Report Structure & Tasks](#report-structure--tasks)
     - [Report Timeline](#report-timeline)
-18. [References](#references)
+19. [References](#references)
 
 ---
 
@@ -1477,6 +1485,498 @@ Nice to Have (28 hrs): + ELK + Linux Admin + Istio
 | + Helm + ArgoCD | DevOps Engineer (Mid) | ₹18-35 LPA |
 | + Ansible + Scripting | DevOps Engineer (Mid-Senior) | ₹25-45 LPA |
 | All modules | Senior DevOps / Platform / SRE | ₹35-60 LPA |
+
+---
+
+## SDE 2 Interview Preparation (~80 hours)
+
+Tailored preparation for SDE 2 roles, considering your background:
+- **2 years 9 months** at Accenture (Azure Cloud Security, Azure Policies)
+- **3 months** internship at CNCF OpenCost project
+- **Master's in CS** (completing with VibeVault project)
+
+### Your Profile Positioning
+
+```
+┌─────────────────────────────────────────────────────────────────────┐
+│  "I spent 3 years in cloud security understanding how systems      │
+│   fail and how to make them resilient. Now I want to build the     │
+│   applications that run on that infrastructure. My VibeVault       │
+│   project demonstrates I can design and implement scalable         │
+│   microservices, while my cloud background means I think about     │
+│   security, scalability, and operations from day one."             │
+└─────────────────────────────────────────────────────────────────────┘
+```
+
+### SDE 2 Interview Structure
+
+| Round | Weightage | Your Preparation Focus |
+|-------|-----------|----------------------|
+| DSA (1-2 rounds) | 30% | Must prove coding skills - this is critical |
+| Low Level Design | 20% | Scaler LLD + practice problems |
+| High Level Design | 25% | Your project + Scaler HLD + practice |
+| Project Deep Dive | 15% | VibeVault architecture decisions |
+| Behavioral | 10% | Career transition story + STAR format |
+
+### Eligibility Assessment
+
+| Aspect | Status | Notes |
+|--------|--------|-------|
+| Years of experience | ✅ 3 years | Meets 2-4 year SDE 2 requirement |
+| Coding experience | ⚠️ Limited | Azure policies ≠ backend coding |
+| System design | ✅ Strong | Cloud background + Scaler HLD |
+| Project | ✅ Strong | VibeVault demonstrates backend skills |
+| Education | ✅ Strong | Master's in CS |
+
+**Verdict:** Eligible for SDE 2, but need strong DSA performance to prove coding skills.
+
+---
+
+### Target Roles (By Fit)
+
+#### Tier 1: High Success Probability
+
+| Role | Why It Fits | Target Companies |
+|------|-------------|------------------|
+| **Platform Engineer** | Cloud + K8s + Backend | Razorpay, Gojek, Atlassian |
+| **Backend (Cloud teams)** | Azure/AWS experience valued | Microsoft, Amazon, Google Cloud |
+| **SRE** | Cloud + observability | LinkedIn, Uber, Dropbox |
+
+#### Tier 2: Good Fit
+
+| Role | Prep Needed | Target Companies |
+|------|-------------|------------------|
+| **SDE 2 (Backend)** | Strong DSA + project showcase | Flipkart, CRED, Swiggy |
+| **DevOps Engineer** | Natural fit | Any tech company |
+
+#### Companies That Value Your Profile
+
+| Company Type | Examples | Why They'll Like You |
+|--------------|----------|---------------------|
+| Cloud-native startups | Hasura, Postman, BrowserStack | Cloud + can build |
+| DevTools | Grafana, HashiCorp, GitLab | CNCF background |
+| Fintech | Razorpay, CRED, Zerodha | Security background |
+| E-commerce | Flipkart, Meesho, Myntra | Your project is relevant |
+
+---
+
+### DSA Preparation Track (40 hours)
+
+For SDE 2, you need ~80-100 well-understood problems (not 200+ like for junior roles).
+
+#### Week-by-Week DSA Plan
+
+| Week | Topics | Problems | Hours |
+|------|--------|----------|-------|
+| 1 | Arrays, Strings, Hashing | 15 Medium | 8 |
+| 2 | Two Pointers, Sliding Window | 12 Medium | 7 |
+| 3 | Trees, BST, BFS/DFS | 15 Medium-Hard | 8 |
+| 4 | Graphs (BFS, DFS, Dijkstra) | 12 Medium-Hard | 7 |
+| 5 | DP (1D and 2D) | 15 Medium-Hard | 10 |
+
+#### Topic-Wise Problem List
+
+**Arrays & Strings (15 problems)**
+| # | Problem | Difficulty | Pattern |
+|---|---------|------------|---------|
+| 1 | Two Sum | Easy | Hashing |
+| 2 | Best Time to Buy and Sell Stock | Easy | Kadane's |
+| 3 | Contains Duplicate | Easy | Hashing |
+| 4 | Product of Array Except Self | Medium | Prefix/Suffix |
+| 5 | Maximum Subarray | Medium | Kadane's |
+| 6 | 3Sum | Medium | Two Pointers |
+| 7 | Container With Most Water | Medium | Two Pointers |
+| 8 | Longest Substring Without Repeating | Medium | Sliding Window |
+| 9 | Longest Palindromic Substring | Medium | Expand Around Center |
+| 10 | Group Anagrams | Medium | Hashing |
+| 11 | Valid Parentheses | Easy | Stack |
+| 12 | Merge Intervals | Medium | Sorting |
+| 13 | Next Permutation | Medium | Pattern |
+| 14 | Trapping Rain Water | Hard | Two Pointers |
+| 15 | Minimum Window Substring | Hard | Sliding Window |
+
+**Trees & Graphs (27 problems)**
+| # | Problem | Difficulty | Pattern |
+|---|---------|------------|---------|
+| 1 | Invert Binary Tree | Easy | Recursion |
+| 2 | Maximum Depth of Binary Tree | Easy | DFS |
+| 3 | Same Tree | Easy | DFS |
+| 4 | Binary Tree Level Order Traversal | Medium | BFS |
+| 5 | Validate BST | Medium | DFS + Range |
+| 6 | Lowest Common Ancestor | Medium | DFS |
+| 7 | Binary Tree Right Side View | Medium | BFS |
+| 8 | Serialize/Deserialize Binary Tree | Hard | BFS/DFS |
+| 9 | Number of Islands | Medium | DFS/BFS |
+| 10 | Clone Graph | Medium | BFS + HashMap |
+| 11 | Course Schedule | Medium | Topological Sort |
+| 12 | Course Schedule II | Medium | Topological Sort |
+| 13 | Pacific Atlantic Water Flow | Medium | DFS |
+| 14 | Word Ladder | Hard | BFS |
+| 15 | Alien Dictionary | Hard | Topological Sort |
+
+**Dynamic Programming (20 problems)**
+| # | Problem | Difficulty | Pattern |
+|---|---------|------------|---------|
+| 1 | Climbing Stairs | Easy | 1D DP |
+| 2 | House Robber | Medium | 1D DP |
+| 3 | House Robber II | Medium | 1D DP |
+| 4 | Coin Change | Medium | 1D DP |
+| 5 | Longest Increasing Subsequence | Medium | 1D DP |
+| 6 | Word Break | Medium | 1D DP |
+| 7 | Unique Paths | Medium | 2D DP |
+| 8 | Jump Game | Medium | Greedy/DP |
+| 9 | Decode Ways | Medium | 1D DP |
+| 10 | Longest Common Subsequence | Medium | 2D DP |
+| 11 | Edit Distance | Hard | 2D DP |
+| 12 | 0/1 Knapsack | Medium | 2D DP |
+| 13 | Partition Equal Subset Sum | Medium | 2D DP |
+| 14 | Target Sum | Medium | 2D DP |
+| 15 | Longest Palindromic Subsequence | Medium | 2D DP |
+
+**System Design-ish DSA (8 problems)**
+| # | Problem | Difficulty | Why Important |
+|---|---------|------------|---------------|
+| 1 | LRU Cache | Medium | Asked frequently |
+| 2 | LFU Cache | Hard | Cache understanding |
+| 3 | Design Twitter | Medium | System design lite |
+| 4 | Min Stack | Medium | Stack design |
+| 5 | Implement Trie | Medium | Search systems |
+| 6 | Design Add and Search Words | Medium | Trie + DFS |
+| 7 | Find Median from Data Stream | Hard | Heap design |
+| 8 | Rate Limiter (custom) | Medium | Real-world design |
+
+#### DSA Resources
+
+| Resource | Use For | Link |
+|----------|---------|------|
+| NeetCode 150 | Curated patterns | [neetcode.io](https://neetcode.io/) |
+| Striver's SDE Sheet | Indian interviews | [takeuforward.org](https://takeuforward.org/interviews/strivers-sde-sheet-top-coding-interview-problems/) |
+| LeetCode | Practice | [leetcode.com](https://leetcode.com/) |
+| AlgoExpert | Video explanations | [algoexpert.io](https://www.algoexpert.io/) |
+
+---
+
+### High Level Design Practice (20 hours)
+
+Your Scaler HLD curriculum covers theory. Practice these specific problems:
+
+#### Must-Practice HLD Problems
+
+| # | Problem | Key Concepts | Prep Time |
+|---|---------|--------------|-----------|
+| 1 | **Design URL Shortener** | Hashing, DB, Base62 encoding | 2 hrs |
+| 2 | **Design Twitter Feed** | Fan-out, caching, pub-sub | 2 hrs |
+| 3 | **Design WhatsApp** | Messaging, presence, delivery guarantees | 2 hrs |
+| 4 | **Design Rate Limiter** | Token bucket, sliding window, distributed | 2 hrs |
+| 5 | **Design Notification System** | Push, email, queuing, prioritization | 2 hrs |
+| 6 | **Design E-commerce** (Your Project!) | Cart, orders, payments, Saga | 2 hrs |
+| 7 | **Design Uber/Ola** | Location, matching, real-time | 2 hrs |
+| 8 | **Design YouTube** | Video upload, CDN, transcoding | 2 hrs |
+
+#### HLD Answer Framework (Use for Every Problem)
+
+```
+1. REQUIREMENTS (3 min)
+   ├── Functional: What should the system do?
+   ├── Non-functional: Scale, latency, availability
+   └── Clarifying questions
+
+2. ESTIMATION (3 min)
+   ├── Users: DAU, MAU
+   ├── Traffic: QPS (read/write)
+   ├── Storage: Data size over 5 years
+   └── Bandwidth
+
+3. HIGH-LEVEL DESIGN (10 min)
+   ├── Draw main components
+   ├── API design
+   └── Data flow
+
+4. DEEP DIVE (15 min)
+   ├── Database schema
+   ├── Scaling strategies
+   ├── Caching
+   └── Trade-offs
+
+5. WRAP UP (4 min)
+   ├── Bottlenecks
+   ├── Monitoring
+   └── Future improvements
+```
+
+#### Using Your Project in HLD Interviews
+
+When asked to design an e-commerce system, payment system, or notification system:
+
+```
+"I actually built something similar in my VibeVault project. Let me walk you
+through the architecture decisions I made..."
+
+Then discuss:
+├── Why microservices over monolith?
+├── Why Saga pattern for Order→Payment?
+├── Why Elasticsearch for search vs MySQL LIKE?
+├── Why Kafka for async communication?
+├── Why MongoDB for Cart vs MySQL?
+└── Performance benchmarks (before/after)
+```
+
+#### HLD Resources
+
+| Resource | Use For |
+|----------|---------|
+| [System Design Primer](https://github.com/donnemartin/system-design-primer) | Free comprehensive guide |
+| [ByteByteGo](https://www.youtube.com/@ByteByteGo) | Visual explanations |
+| [Designing Data-Intensive Applications](https://dataintensive.net/) | Deep theory |
+| [Gaurav Sen](https://www.youtube.com/@gaborsen) | Indian interview focused |
+| Your Scaler HLD Notes | Already curated |
+
+---
+
+### Low Level Design Practice (10 hours)
+
+#### Must-Practice LLD Problems
+
+| # | Problem | Concepts Tested | Time |
+|---|---------|-----------------|------|
+| 1 | **Parking Lot** | Classes, enums, relationships | 1.5 hrs |
+| 2 | **BookMyShow** | Seat booking, concurrency, locking | 1.5 hrs |
+| 3 | **Library Management** | CRUD, relationships, search | 1 hr |
+| 4 | **Splitwise** | Expense sharing, graph algorithms | 1.5 hrs |
+| 5 | **Tic-Tac-Toe** | Game state, validation | 1 hr |
+| 6 | **Snake & Ladder** | State machine, dice, board | 1 hr |
+| 7 | **Chess (basic)** | Inheritance, polymorphism | 1.5 hrs |
+| 8 | **Elevator System** | State machine, scheduling | 1 hr |
+
+#### LLD Answer Framework
+
+```
+1. CLARIFY REQUIREMENTS (2 min)
+   └── What features to support?
+
+2. IDENTIFY CLASSES (3 min)
+   ├── Nouns → Classes
+   └── Verbs → Methods
+
+3. RELATIONSHIPS (2 min)
+   ├── Has-A (composition)
+   ├── Is-A (inheritance)
+   └── Uses-A (dependency)
+
+4. DESIGN PATTERNS (3 min)
+   └── Which patterns apply?
+
+5. CODE SKELETON (15 min)
+   ├── Classes with key methods
+   ├── Interfaces
+   └── Main flow
+
+6. HANDLE EDGE CASES (5 min)
+```
+
+#### Design Patterns to Know
+
+| Pattern | When to Use | Example from Your Project |
+|---------|-------------|---------------------------|
+| **Singleton** | One instance | Database connection pool |
+| **Factory** | Object creation | PaymentProcessorFactory (Razorpay, Stripe) |
+| **Strategy** | Swappable algorithms | SearchStrategy (MySQL, Elasticsearch) |
+| **Observer** | Event notifications | OrderCreated → Notify, UpdateInventory |
+| **Builder** | Complex object construction | ProductRequestDTO builder |
+| **Decorator** | Add behavior | Logging decorators |
+| **Repository** | Data access abstraction | ProductRepository, UserRepository |
+
+---
+
+### Behavioral Preparation (10 hours)
+
+#### Your Career Story (Memorize This)
+
+**"Tell me about yourself" (2 min version):**
+```
+"I'm a software engineer with 3 years of experience, transitioning from
+cloud security to backend development.
+
+At Accenture, I spent nearly 3 years working on Azure cloud security,
+implementing policies and governance for enterprise clients. This gave
+me deep understanding of how large-scale systems operate and fail.
+
+I also contributed to OpenCost, a CNCF project for Kubernetes cost
+monitoring, which exposed me to open-source development and cloud-native
+technologies.
+
+Now I'm completing my Master's in CS, where I built VibeVault - a
+production-grade e-commerce platform with 6 microservices, Kafka,
+Elasticsearch, and deployed on AWS EKS. This project was intentional -
+I wanted to prove I can build the applications that I've been securing
+and deploying.
+
+I'm looking for SDE 2 roles where I can combine my infrastructure
+knowledge with backend development to build scalable, secure systems."
+```
+
+#### STAR Stories from Your Experience
+
+| Question Type | Story Source | STAR Format |
+|---------------|--------------|-------------|
+| **Ownership** | VibeVault project | Built e2e, made all architecture decisions |
+| **Technical Decision** | Saga vs 2PC, ES vs MySQL | Evaluated trade-offs, chose based on requirements |
+| **Challenge** | Learning new stack | Java, Spring Boot, K8s in 4 months |
+| **Conflict** | (Prepare from Accenture) | Disagreement with team/client, resolution |
+| **Failure** | (Prepare authentic story) | What went wrong, what you learned |
+| **Impact** | OpenCost contribution | Open-source impact, CNCF recognition |
+
+#### Common Behavioral Questions
+
+**About Career Transition:**
+| Question | How to Answer |
+|----------|---------------|
+| "Why switch from cloud to backend?" | "Want to build what I've been securing" |
+| "Why should we hire you over someone with backend experience?" | "I bring security-first thinking + infra knowledge + recent hands-on project" |
+| "Will you go back to cloud roles?" | "Backend + Cloud = Platform Engineering is my goal" |
+
+**About Your Project:**
+| Question | How to Answer |
+|----------|---------------|
+| "Why did you choose this architecture?" | Explain trade-offs (monolith vs microservices, etc.) |
+| "What was the hardest part?" | Saga pattern implementation, distributed transactions |
+| "What would you do differently?" | Be honest, show growth mindset |
+
+**General:**
+| Question | Your STAR Story |
+|----------|-----------------|
+| "Tell me about a time you disagreed with someone" | Prepare from Accenture |
+| "Describe a time you failed" | Authentic story, focus on learning |
+| "How do you handle tight deadlines?" | VibeVault + Masters + Job search |
+
+---
+
+### Mock Interview Schedule (10 hours)
+
+| Week | Mock Type | Platform | Focus |
+|------|-----------|----------|-------|
+| 1 | DSA Mock | Pramp / InterviewBit | Arrays, Strings |
+| 2 | DSA Mock | Pramp | Trees, Graphs |
+| 3 | LLD Mock | Peer / Pramp | Parking Lot, BookMyShow |
+| 4 | HLD Mock | Peer / Interviewing.io | URL Shortener, Twitter |
+| 5 | Full Loop | Interviewing.io | All rounds |
+
+#### Mock Interview Resources
+
+| Platform | Type | Cost |
+|----------|------|------|
+| [Pramp](https://www.pramp.com/) | Free peer mocks | Free |
+| [Interviewing.io](https://interviewing.io/) | Anonymous with engineers | Paid |
+| [InterviewBit](https://www.interviewbit.com/) | DSA practice | Free + Paid |
+| Peer mock | Find on LinkedIn/Discord | Free |
+
+---
+
+### SDE 2 Prep Timeline
+
+#### Integrated with Main Roadmap
+
+```
+Month 2 (Roadmap Week 5-8):
+├── Building: User, Product, Cart on EKS
+├── DSA: 25 problems (Arrays, Strings, Hashing)
+└── Output: 3 services deployed + DSA foundation
+
+Month 3 (Roadmap Week 9-12):
+├── Building: Order, Payment, Notification
+├── DSA: 35 problems (Trees, Graphs, DP)
+├── LLD: Practice 4 problems
+├── Start applying: Week 10
+└── Output: 6 services + DSA intermediate
+
+Month 4 (Roadmap Week 13-14 + Interview Prep):
+├── Building: Performance benchmarking
+├── DSA: 20 problems (DP, revision)
+├── HLD: Practice 6 problems
+├── Mocks: 4-5 mock interviews
+├── Interview actively
+└── Output: Complete project + interview ready
+
+Month 5 (If needed):
+├── Full interview mode
+├── Company-specific prep
+└── Negotiate offers
+```
+
+#### Weekly Schedule (During Month 3-4)
+
+```
+Monday:     DSA (2 hrs) + Project work (3 hrs)
+Tuesday:    DSA (2 hrs) + Project work (3 hrs)
+Wednesday:  LLD/HLD practice (2 hrs) + Project work (3 hrs)
+Thursday:   DSA (2 hrs) + Project work (3 hrs)
+Friday:     DSA (2 hrs) + Applications/networking (2 hrs)
+Saturday:   Mock interview (2 hrs) + HLD practice (2 hrs)
+Sunday:     Revision (2 hrs) + Behavioral prep (1 hr)
+
+Total: ~35-40 hrs/week
+```
+
+---
+
+### Resume Positioning
+
+#### How to Present Your Experience
+
+**Current (Weak):**
+```
+Azure Cloud Security Engineer - Accenture
+- Worked on Azure policies
+- Managed security governance
+```
+
+**Improved (Strong):**
+```
+Cloud Security Engineer - Accenture (2 yrs 9 mos)
+- Designed and implemented Azure Policy governance for 50+ enterprise
+  subscriptions, reducing security violations by 40%
+- Automated security compliance checks using Azure Functions and Logic Apps
+- Collaborated with development teams to integrate security into CI/CD pipelines
+- Technologies: Azure, ARM Templates, PowerShell, Azure DevOps
+
+Open Source Contributor - OpenCost (CNCF) (3 mos)
+- Contributed to Kubernetes cost monitoring tool with 4k+ GitHub stars
+- Implemented [specific feature/fix]
+- Technologies: Go, Kubernetes, Prometheus
+```
+
+**Project Section:**
+```
+VibeVault E-commerce Platform (Master's Project)
+- Architected microservices platform with 6 services handling 1000+ req/sec
+- Implemented Saga pattern for distributed transactions across Order-Payment services
+- Built product search with Elasticsearch, achieving 10x latency improvement over MySQL
+- Deployed on AWS EKS with Terraform IaC and Jenkins CI/CD
+- Technologies: Java, Spring Boot, MySQL, MongoDB, Redis, Kafka, Elasticsearch,
+  Kubernetes, Terraform, AWS (EKS, RDS, MSK, OpenSearch)
+```
+
+---
+
+### SDE 2 Prep Summary
+
+| Component | Hours | When |
+|-----------|-------|------|
+| DSA Practice | 40 | Month 2-4 (ongoing) |
+| HLD Practice | 20 | Month 3-4 |
+| LLD Practice | 10 | Month 3 |
+| Behavioral Prep | 10 | Month 3-4 |
+| Mock Interviews | 10 | Month 4 |
+| **Total** | **90** | |
+
+### Expected Outcomes
+
+| After | Status | What You Can Target |
+|-------|--------|---------------------|
+| Month 2 | Project deployed, DSA weak | Early-stage startups |
+| Month 3 | 60% DSA done, LLD practiced | Mid-stage startups, product companies |
+| Month 4 | Full prep complete | Flipkart, Razorpay, CRED, Amazon |
+| Month 4 + Mocks | Interview battle-tested | FAANG, top unicorns |
 
 ---
 
