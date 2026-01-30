@@ -40,10 +40,14 @@ Based on the PRD/HLD and current progress.
 12. [Curriculum ↔ Project Mapping](#curriculum--project-mapping)
 13. [AWS Services Summary](#aws-services-summary)
 14. [2-Month Achievement Summary](#2-month-achievement-summary)
-15. [Job Application Timeline](#job-application-timeline) *(Start applying: Month 2, Week 8)*
+15. [Job Application Timeline](#job-application-timeline) *(Start applying: Month 3)*
     - [When to Start Applying](#when-to-start-applying)
     - [Application Preparation Checklist](#application-preparation-checklist)
     - [Target Roles & Expected CTC](#target-roles--expected-ctc)
+    - [Application Strategy Matrix](#application-strategy-matrix)
+    - [Company Targets by Tier](#company-targets-by-tier)
+    - [Week-by-Week Application Plan](#week-by-week-application-plan)
+    - [Interview Tracking Template](#interview-tracking-template)
 16. [Optional: DevOps Skills Enhancement](#optional-devops-skills-enhancement-if-time-permits) *(+60 hours)*
     - [Helm Charts](#optional-module-1-helm-charts-6-hours) (6 hrs)
     - [ArgoCD GitOps](#optional-module-2-argocd-gitops-8-hours) (8 hrs)
@@ -1168,6 +1172,166 @@ Month 4:
 | Senior Backend Engineer | Flipkart, Razorpay, CRED | ₹30-50 LPA |
 | SDE-2/SDE-3 | Amazon, Microsoft, Google | ₹35-60 LPA |
 | Staff Engineer | High-growth startups | ₹40-70 LPA |
+
+### Application Strategy Matrix
+
+Given your profile (3 years cloud security + Master's + VibeVault project):
+
+| Role | Company Type | Apply? | Reasoning |
+|------|--------------|--------|-----------|
+| **SDE 2** | Startups/Non-MAANG | ✅ **Primary (50%)** | Right level for 3 years experience |
+| **SDE 1** | MAANG | ✅ **Parallel (30%)** | MAANG SDE 1 pays = Non-MAANG SDE 2 |
+| **SDE 2** | MAANG | ⚠️ **Stretch (20%)** | High bar, attempt after Month 4 |
+| **SDE 1** | Non-MAANG | ❌ **Skip** | Underleveled, limits salary |
+
+### Why MAANG SDE 1 is Worth It
+
+| Factor | MAANG SDE 1 | Non-MAANG SDE 2 |
+|--------|-------------|-----------------|
+| CTC | ₹35-55 LPA | ₹25-40 LPA |
+| Brand value | Excellent | Moderate |
+| Learning | Best practices at scale | Varies |
+| Growth | SDE 2 in 1-2 years | Depends |
+
+**You're NOT overqualified for MAANG SDE 1** - your 3 years are in cloud security, not backend. Domain switch + Master's = valid SDE 1 narrative.
+
+### Company Targets by Tier
+
+#### Tier 1: Primary Targets — SDE 2 at Startups/Product Companies
+
+| Company | Why Good Fit | Expected CTC | Apply When |
+|---------|--------------|--------------|------------|
+| **Razorpay** | Payments + security background | ₹30-45 LPA | Month 3 |
+| **CRED** | Cloud-native, diverse backgrounds | ₹35-50 LPA | Month 3 |
+| **Zerodha** | Platform engineering focus | ₹25-40 LPA | Month 3 |
+| **Flipkart** | E-commerce = your project | ₹30-45 LPA | Month 3 |
+| **Swiggy** | Microservices heavy | ₹28-42 LPA | Month 3 |
+| **Meesho** | Fast-growing, less competitive | ₹25-38 LPA | Month 3 |
+| **PhonePe** | Fintech, security valued | ₹30-45 LPA | Month 3 |
+| **BrowserStack** | DevTools, CNCF background | ₹28-40 LPA | Month 3 |
+| **Postman** | API tools, developer focus | ₹30-45 LPA | Month 3 |
+| **Atlassian** | Platform engineering | ₹40-55 LPA | Month 3-4 |
+
+#### Tier 2: Parallel Track — SDE 1 at MAANG
+
+| Company | Role/Level | Expected CTC | Interview Focus |
+|---------|------------|--------------|-----------------|
+| **Google** | L3 | ₹35-50 LPA | DSA heavy, Googleyness |
+| **Amazon** | SDE 1 | ₹30-45 LPA | DSA + Leadership Principles |
+| **Microsoft** | 59-60 | ₹35-48 LPA | Balanced (DSA + Design) |
+| **Meta** | E3 | ₹40-55 LPA | Very DSA heavy |
+| **Apple** | ICT2 | ₹35-50 LPA | Less common in India |
+
+#### Tier 3: Stretch Goals — SDE 2 at MAANG
+
+| Company | Role/Level | Expected CTC | When to Apply |
+|---------|------------|--------------|---------------|
+| **Google** | L4 | ₹55-80 LPA | Month 4+ if crushing interviews |
+| **Amazon** | SDE 2 | ₹45-65 LPA | Month 4+ |
+| **Microsoft** | 61-62 | ₹50-70 LPA | Month 4+ |
+| **Meta** | E4 | ₹60-90 LPA | Month 4+ (very high bar) |
+
+### Week-by-Week Application Plan
+
+#### Month 3: Warm-up & Primary Targets
+
+| Week | Applications | Target Companies | Goal |
+|------|--------------|------------------|------|
+| **Week 9** | 5-8 | Meesho, BrowserStack, early-stage startups | Build interview confidence |
+| **Week 10** | 8-10 | Swiggy, PhonePe, mid-stage startups | Get interview calls |
+| **Week 11** | 10-12 | Razorpay, CRED, Flipkart | Primary targets |
+| **Week 12** | 10-12 | Zerodha, Atlassian, continue above | Expand pipeline |
+
+#### Month 4: MAANG + Intensify
+
+| Week | Applications | Target Companies | Goal |
+|------|--------------|------------------|------|
+| **Week 13** | 8-10 | Amazon, Microsoft (SDE 1) | MAANG pipeline |
+| **Week 14** | 8-10 | Google (L3), continue startups | Parallel tracks |
+| **Week 15** | 5-8 | Meta, remaining targets | Complete pipeline |
+| **Week 16** | As needed | Follow-ups, new opportunities | Close offers |
+
+### How to Position Yourself
+
+#### For MAANG SDE 1 Applications
+
+**Cover letter / Intro:**
+```
+"I have 3 years of experience in cloud security at Accenture and recently
+completed my Master's in Computer Science. During my Master's, I built
+VibeVault - a production-grade e-commerce platform with 6 microservices
+deployed on AWS EKS.
+
+I'm applying for SDE 1 because I'm transitioning into backend development
+and want to learn from the best engineering practices at [Company]. My
+cloud infrastructure background means I understand how systems operate
+at scale, and I'm now focused on building the applications that run on
+that infrastructure."
+```
+
+#### For Startup/Product Company SDE 2 Applications
+
+**Cover letter / Intro:**
+```
+"I bring 3 years of experience with a unique combination: cloud
+infrastructure expertise from Accenture, open-source contribution to
+CNCF's OpenCost project, and hands-on backend development from my
+Master's project where I built a 6-service microservices platform
+with Kafka, Elasticsearch, and AWS EKS.
+
+I understand both how to build systems and how to operate them securely
+at scale - a combination that's valuable for any growing engineering team."
+```
+
+### Interview Tracking Template
+
+Track your applications in a spreadsheet:
+
+| Company | Role | Applied Date | Status | Next Step | Notes |
+|---------|------|--------------|--------|-----------|-------|
+| Razorpay | SDE 2 | DD/MM | Applied / Screen / Tech1 / Tech2 / HR / Offer | Follow up by X | Referral from Y |
+| Amazon | SDE 1 | DD/MM | ... | ... | ... |
+
+**Status stages:**
+```
+Applied → Screening → Tech Round 1 → Tech Round 2 →
+HLD/LLD Round → Hiring Manager → HR → Offer → Negotiation → Accepted
+```
+
+### Referral Strategy
+
+| Source | How to Approach |
+|--------|-----------------|
+| **LinkedIn connections** | "I'm exploring SDE roles at [Company]. Would you be open to referring me?" |
+| **College alumni** | Check alumni network for employees at target companies |
+| **CNCF community** | OpenCost contributors might work at target companies |
+| **Scaler network** | Fellow students/alumni at target companies |
+
+### Negotiation Tips
+
+When you have multiple offers:
+
+| Scenario | Strategy |
+|----------|----------|
+| Startup vs MAANG SDE 1 | MAANG for brand if CTC similar |
+| Multiple startup offers | Use higher offer to negotiate |
+| MAANG SDE 1 vs MAANG SDE 1 | Compare team, role, location |
+| Low offer from dream company | Ask for signing bonus, stocks, review timeline |
+
+**Key phrases:**
+- "I have a competing offer at ₹X. Can you match or improve?"
+- "I'm very excited about [Company], but the offer is below my expectations based on my experience and the market."
+- "Is there flexibility in the stock component?"
+
+### Application Tracking Milestones
+
+| Milestone | Target | By When |
+|-----------|--------|---------|
+| Applications sent | 50+ | End of Month 3 |
+| Interview calls | 10-15 | End of Month 3 |
+| Completed interviews | 8-10 | End of Month 4 |
+| Offers received | 2-3 | End of Month 4 |
+| Accepted offer | 1 | Month 4-5 |
 
 ---
 
