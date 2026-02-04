@@ -11,16 +11,17 @@ Based on the PRD/HLD and current progress.
 3. [Learning Resources](#learning-resources)
    - [Theory (System Design)](#theory-system-design)
    - [Hands-on (DevOps & Cloud)](#hands-on-devops--cloud)
-4. [Month 1: Foundation (~120 hours)](#month-1-foundation-120-hours)
-   - [Week 1: Terraform Fundamentals](#week-1-terraform-fundamentals-30-hours)
-   - [Week 2: Terraform AWS + Infrastructure](#week-2-terraform-aws--infrastructure-30-hours)
-   - [Week 3: Kubernetes Fundamentals](#week-3-kubernetes-fundamentals-30-hours)
-   - [Week 4: Kubernetes Advanced + Local Testing](#week-4-kubernetes-advanced--local-testing-30-hours)
-5. [Month 2: Implementation Sprint (~190 hours)](#month-2-implementation-sprint-190-hours)
-   - [Week 5: Deploy to EKS + Kong](#week-5-deploy-to-eks--kong-44-hours)
-   - [Week 6: CI/CD Pipeline](#week-6-cicd-pipeline-44-hours)
-   - [Week 7: Elasticsearch Integration](#week-7-elasticsearch-integration-44-hours)
-   - [Week 8: Kafka + Cart Service](#week-8-kafka--cart-service-44-hours)
+   - [Recommended AWS Courses (KodeKloud)](#recommended-aws-courses-kodekloud)
+4. [Month 1: Foundation (~270 hours)](#month-1-foundation-270-hours)
+   - [Week 1: Terraform Fundamentals](#week-1-terraform-fundamentals-68-hours)
+   - [Week 2: Terraform AWS + Infrastructure](#week-2-terraform-aws--infrastructure-68-hours)
+   - [Week 3: Kubernetes Fundamentals](#week-3-kubernetes-fundamentals-68-hours)
+   - [Week 4: Kubernetes Advanced + Local Testing](#week-4-kubernetes-advanced--local-testing-68-hours)
+5. [Month 2: Implementation Sprint (~270 hours)](#month-2-implementation-sprint-270-hours)
+   - [Week 5: Deploy to EKS + Kong](#week-5-deploy-to-eks--kong-68-hours)
+   - [Week 6: CI/CD Pipeline](#week-6-cicd-pipeline-68-hours)
+   - [Week 7: Elasticsearch Integration](#week-7-elasticsearch-integration-68-hours)
+   - [Week 8: Kafka + Cart Service](#week-8-kafka--cart-service-68-hours)
 6. [Post 2-Months: Remaining Work](#post-2-months-remaining-work) *(Month 3-4)*
    - [Week 9-10: Order Service + Saga Pattern](#week-9-10-order-service--saga-pattern-60-hours-estimated) *(Month 3)*
    - [Week 11-12: Payment + Notification + Redis](#week-11-12-payment--notification--redis-60-hours-estimated) *(Month 3)*
@@ -81,17 +82,31 @@ Based on the PRD/HLD and current progress.
 
 ## Time Commitment
 
-### Month 1 (~120 hours)
-- Weekdays: 4 hours/day (also doing Java/LLD + DSA)
-- Sundays: 6 hours/day
-- **Focus:** 60% Learning, 40% Implementation
+**Start Date:** Thursday, February 5, 2026
 
-### Month 2 (~190 hours)
-- Weekdays: 6 hours/day
-- Sundays: 8 hours/day
+### Daily Schedule
+- **Weekdays (Mon-Fri):** 9 hours/day
+- **Weekends (Sat-Sun):** 11-12 hours/day
+- **Weekly Total:** ~68 hours
+
+### Timeline Overview
+| Phase | Dates | Weeks | Hours |
+|-------|-------|-------|-------|
+| Month 1: Foundation | Feb 5 - Mar 4, 2026 | Week 1-4 | ~270 hrs |
+| Month 2: Implementation | Mar 5 - Apr 1, 2026 | Week 5-8 | ~270 hrs |
+| Month 3-4: Remaining Work | Apr 2 onwards | Week 9-14 | ~400 hrs |
+
+### Month 1 (~270 hours)
+- Weekdays: 9 hours/day
+- Weekends: 11-12 hours/day
+- **Focus:** 50% Learning, 50% Implementation
+
+### Month 2 (~270 hours)
+- Weekdays: 9 hours/day
+- Weekends: 11-12 hours/day
 - **Focus:** 20% Learning, 80% Implementation
 
-**Total: ~310 hours over 2 months**
+**Total: ~540 hours over 2 months** (Project-first approach, DSA/LLD deferred)
 
 ---
 
@@ -124,21 +139,39 @@ Based on the PRD/HLD and current progress.
 - Jenkins
 - AWS
 
+#### Recommended AWS Courses (KodeKloud)
+
+| Priority | Course | Why | When | Est. Hours |
+|----------|--------|-----|------|------------|
+| 🔴 **HIGH** | [AWS Workshop with Terraform](https://learn.kodekloud.com/courses/learn-by-doing-aws-workshop-with-terraform) | Directly teaches AWS through Terraform - exactly your use case | Week 1-2 | 8-10 hrs |
+| 🔴 **HIGH** | [AWS IAM](https://learn.kodekloud.com/courses/aws-iam) | IAM is #1 source of deployment failures. Needed for EKS roles, IRSA, Jenkins→ECR access | Week 1 | 4-6 hrs |
+| 🟡 **MEDIUM** | [AWS RDS](https://learn.kodekloud.com/courses/aws-rds) | RDS-specific concepts: parameter groups, subnet groups, Multi-AZ | Week 2 | 4-5 hrs |
+| 🟡 **MEDIUM** | [AWS EC2](https://learn.kodekloud.com/courses/amazon-elastic-compute-cloud-ec2) | Useful for EKS worker nodes, networking, security groups, Jenkins on EC2 | Week 2 | 4-5 hrs |
+
+**Courses to Skip (for this project):**
+- ❌ [AWS Solutions Architect Associate](https://learn.kodekloud.com/courses/aws-solutions-architect-associate-certification) - Certification-focused, covers 50+ services. Overkill for your timeline.
+- ❌ [AWS Certified Developer Associate](https://learn.kodekloud.com/courses/aws-certified-developer-associate) - Focuses on Lambda, DynamoDB, API Gateway - services you're not using.
+- ❌ [AWS for Beginners](https://learn.kodekloud.com/courses/aws-for-beginners-with-hands-on-labs) - Too basic if doing the Terraform workshop.
+
 ---
 
-## Month 1: Foundation (~120 hours)
+## Month 1: Foundation (~270 hours)
+**Feb 5 - Mar 4, 2026**
 
-### Week 1: Terraform Fundamentals (~30 hours)
+### Week 1: Terraform Fundamentals (~68 hours)
+**Feb 5 - Feb 11, 2026**
 
-| Day | Hours | Task |
-|-----|-------|------|
-| Mon | 4 | KodeKloud: Terraform intro + HCL basics |
-| Tue | 4 | KodeKloud: Terraform state, providers |
-| Wed | 4 | KodeKloud: Terraform modules |
-| Thu | 4 | Scaler L1: System Design 101 |
-| Fri | 4 | KodeKloud: Terraform + AWS provider |
-| Sat | 4 | Hands-on: Write basic VPC module |
-| Sun | 6 | Scaler L2 + Continue VPC module |
+| Day | Date | Hours | Task |
+|-----|------|-------|------|
+| Thu | Feb 5 | 9 | KodeKloud: Terraform intro + HCL basics + Terraform state |
+| Fri | Feb 6 | 9 | KodeKloud: Terraform providers + modules |
+| Sat | Feb 7 | 11 | **AWS IAM course** + KodeKloud: Terraform + AWS provider |
+| Sun | Feb 8 | 12 | **AWS Workshop with Terraform (start)** + Scaler L1: System Design 101 |
+| Mon | Feb 9 | 9 | Scaler L2: Load Balancing & Consistent Hashing + Continue AWS Workshop |
+| Tue | Feb 10 | 9 | Hands-on: Write basic VPC module |
+| Wed | Feb 11 | 9 | Continue VPC module + test locally |
+
+> **Note:** AWS IAM fundamentals are critical before writing Terraform modules. Understanding IAM roles, policies, and IRSA will prevent deployment failures in Week 2 and beyond.
 
 #### 📚 Scaler HLD - Lecture 1: System Design 101
 **Topics Covered:**
@@ -178,17 +211,20 @@ Based on the PRD/HLD and current progress.
 
 ---
 
-### Week 2: Terraform AWS + Infrastructure (~30 hours)
+### Week 2: Terraform AWS + Infrastructure (~68 hours)
+**Feb 12 - Feb 18, 2026**
 
-| Day | Hours | Task |
-|-----|-------|------|
-| Mon | 4 | Terraform: EKS module basics |
-| Tue | 4 | Terraform: RDS module |
-| Wed | 4 | Terraform: ECR module |
-| Thu | 4 | Scaler L18: Microservices Architecture |
-| Fri | 4 | Terraform: Wire modules together |
-| Sat | 4 | Deploy infrastructure to AWS |
-| Sun | 6 | Debug + Scaler L19: Microservices Communication |
+| Day | Date | Hours | Task |
+|-----|------|-------|------|
+| Thu | Feb 12 | 9 | **AWS Workshop with Terraform (continue)** + Terraform: EKS module basics |
+| Fri | Feb 13 | 9 | **AWS RDS course** + Terraform: RDS module |
+| Sat | Feb 14 | 11 | **AWS EC2 course** + Terraform: ECR module + Scaler L18: Microservices Architecture |
+| Sun | Feb 15 | 12 | Scaler L19: Microservices Communication + Terraform: Wire modules together |
+| Mon | Feb 16 | 9 | Deploy infrastructure to AWS |
+| Tue | Feb 17 | 9 | Debug deployment issues + verify all resources |
+| Wed | Feb 18 | 9 | Final infrastructure testing + documentation |
+
+> **Note:** The AWS RDS course teaches RDS-specific concepts (parameter groups, subnet groups, Multi-AZ) that help you write correct Terraform configs. The AWS Workshop with Terraform provides hands-on practice deploying AWS resources via Terraform.
 
 #### 📚 Scaler HLD - Lecture 18: Monolith vs Microservices
 **Topics Covered:**
@@ -239,33 +275,35 @@ Based on the PRD/HLD and current progress.
 
 ---
 
-### Week 3: Kubernetes Fundamentals (~30 hours)
+### Week 3: Kubernetes Fundamentals (~68 hours)
+**Feb 19 - Feb 25, 2026**
 
-| Day | Hours | Task |
-|-----|-------|------|
-| Mon | 4 | KodeKloud: K8s Architecture, Pods |
-| Tue | 4 | KodeKloud: Deployments, ReplicaSets |
-| Wed | 4 | KodeKloud: Services, Networking |
-| Thu | 4 | KodeKloud: ConfigMaps, Secrets |
-| Fri | 4 | KodeKloud: Ingress, RBAC |
-| Sat | 4 | Write K8s manifests for userservice |
-| Sun | 6 | Write K8s manifests for productservice |
+| Day | Date | Hours | Task |
+|-----|------|-------|------|
+| Thu | Feb 19 | 9 | KodeKloud: K8s Architecture, Pods, Deployments |
+| Fri | Feb 20 | 9 | KodeKloud: ReplicaSets, Services, Networking |
+| Sat | Feb 21 | 11 | KodeKloud: ConfigMaps, Secrets, Volumes |
+| Sun | Feb 22 | 12 | KodeKloud: Ingress, RBAC, Network Policies |
+| Mon | Feb 23 | 9 | Write K8s manifests for userservice (Deployment, Service, ConfigMap) |
+| Tue | Feb 24 | 9 | Write K8s manifests for productservice + Secrets management |
+| Wed | Feb 25 | 9 | Test both services on Minikube + debug issues |
 
 **Week 3 Deliverable:** K8s manifests for both services (Deployment, Service, ConfigMap, Secrets)
 
 ---
 
-### Week 4: Kubernetes Advanced + Local Testing (~30 hours)
+### Week 4: Kubernetes Advanced + Local Testing (~68 hours)
+**Feb 26 - Mar 4, 2026**
 
-| Day | Hours | Task |
-|-----|-------|------|
-| Mon | 4 | KodeKloud: Helm basics |
-| Tue | 4 | KodeKloud: EKS specifics |
-| Wed | 4 | Test services on Minikube |
-| Thu | 4 | Debug and fix issues |
-| Fri | 4 | Scaler L3: Caching fundamentals |
-| Sat | 4 | Scaler L4: Redis case study |
-| Sun | 6 | Prepare for EKS deployment |
+| Day | Date | Hours | Task |
+|-----|------|-------|------|
+| Thu | Feb 26 | 9 | KodeKloud: Helm basics + create Helm charts for services |
+| Fri | Feb 27 | 9 | KodeKloud: EKS specifics + aws-load-balancer-controller |
+| Sat | Feb 28 | 11 | Test services on Minikube + debug issues |
+| Sun | Mar 1 | 12 | Scaler L3: Caching + Scaler L4: Redis case study |
+| Mon | Mar 2 | 9 | Advanced debugging + health checks + readiness probes |
+| Tue | Mar 3 | 9 | Resource limits, HPA configuration |
+| Wed | Mar 4 | 9 | Final Minikube testing + prepare for EKS deployment |
 
 #### 📚 Scaler HLD - Lecture 3: Caching
 **Topics Covered:**
@@ -318,19 +356,21 @@ Based on the PRD/HLD and current progress.
 
 ---
 
-## Month 2: Implementation Sprint (~190 hours)
+## Month 2: Implementation Sprint (~270 hours)
+**Mar 5 - Apr 1, 2026**
 
-### Week 5: Deploy to EKS + Kong (~44 hours)
+### Week 5: Deploy to EKS + Kong (~68 hours)
+**Mar 5 - Mar 11, 2026**
 
-| Day | Hours | Task |
-|-----|-------|------|
-| Mon | 6 | Deploy userservice to EKS |
-| Tue | 6 | Deploy productservice to EKS |
-| Wed | 6 | Debug networking, service discovery |
-| Thu | 6 | Install Kong Ingress Controller |
-| Fri | 6 | Configure Kong routes |
-| Sat | 6 | AWS ALB + DNS setup |
-| Sun | 8 | End-to-end testing + fixes |
+| Day | Date | Hours | Task |
+|-----|------|-------|------|
+| Thu | Mar 5 | 9 | Deploy userservice to EKS + verify pods running |
+| Fri | Mar 6 | 9 | Deploy productservice to EKS + verify pods running |
+| Sat | Mar 7 | 11 | Debug networking, service discovery, inter-service communication |
+| Sun | Mar 8 | 12 | Install Kong Ingress Controller + configure routes |
+| Mon | Mar 9 | 9 | AWS ALB setup + SSL/TLS configuration |
+| Tue | Mar 10 | 9 | DNS setup (Route53) + health checks |
+| Wed | Mar 11 | 9 | End-to-end testing + capture baseline benchmarks |
 
 **Week 5 Deliverable:** Both services running on EKS with Kong API Gateway
 
@@ -338,17 +378,18 @@ Based on the PRD/HLD and current progress.
 
 ---
 
-### Week 6: CI/CD Pipeline (~44 hours)
+### Week 6: CI/CD Pipeline (~68 hours)
+**Mar 12 - Mar 18, 2026**
 
-| Day | Hours | Task |
-|-----|-------|------|
-| Mon | 6 | KodeKloud: Jenkins fundamentals |
-| Tue | 6 | Jenkins: Setup on EC2/EKS |
-| Wed | 6 | Jenkins: Create pipeline for productservice |
-| Thu | 6 | Jenkins: Add SonarQube integration |
-| Fri | 6 | Jenkins: ECR push + EKS deploy stages |
-| Sat | 6 | Pipeline for userservice |
-| Sun | 8 | Test full CI/CD flow |
+| Day | Date | Hours | Task |
+|-----|------|-------|------|
+| Thu | Mar 12 | 9 | KodeKloud: Jenkins fundamentals + Jenkins setup on EC2 |
+| Fri | Mar 13 | 9 | Jenkins: Create pipeline for productservice (build + test) |
+| Sat | Mar 14 | 11 | Jenkins: SonarQube integration + code quality gates |
+| Sun | Mar 15 | 12 | Jenkins: ECR push + EKS deploy stages |
+| Mon | Mar 16 | 9 | Pipeline for userservice + shared pipeline libraries |
+| Tue | Mar 17 | 9 | Test full CI/CD flow + webhook triggers |
+| Wed | Mar 18 | 9 | Pipeline optimization + measure build/deploy times |
 
 **Week 6 Deliverable:** Automated pipeline: Build → Test → SonarQube → ECR → EKS
 
@@ -391,17 +432,18 @@ GitOps repo
 
 ---
 
-### Week 7: Elasticsearch Integration (~44 hours)
+### Week 7: Elasticsearch Integration (~68 hours)
+**Mar 19 - Mar 25, 2026**
 
-| Day | Hours | Task |
-|-----|-------|------|
-| Mon | 6 | Scaler L9: Typeahead design |
-| Tue | 6 | Scaler L13: Elasticsearch deep dive |
-| Wed | 6 | ES Docker local setup |
-| Thu | 6 | Implement SearchServiceESImpl |
-| Fri | 6 | Index products, test search |
-| Sat | 6 | Fuzzy matching, relevance tuning |
-| Sun | 8 | Deploy ES to AWS OpenSearch |
+| Day | Date | Hours | Task |
+|-----|------|-------|------|
+| Thu | Mar 19 | 9 | Scaler L9: Typeahead design + Scaler L13: Elasticsearch deep dive |
+| Fri | Mar 20 | 9 | ES Docker local setup + basic queries |
+| Sat | Mar 21 | 11 | Implement SearchServiceESImpl + index mapping |
+| Sun | Mar 22 | 12 | Index products + test search + fuzzy matching |
+| Mon | Mar 23 | 9 | Relevance tuning + autocomplete suggestions |
+| Tue | Mar 24 | 9 | Deploy ES to AWS OpenSearch + configure VPC access |
+| Wed | Mar 25 | 9 | Benchmark: MySQL LIKE vs Elasticsearch latency |
 
 #### 📚 Scaler HLD - Lecture 9: Typeahead (Google, Amazon)
 **Topics Covered:**
@@ -452,17 +494,18 @@ GitOps repo
 
 ---
 
-### Week 8: Kafka + Cart Service (~44 hours)
+### Week 8: Kafka + Cart Service (~68 hours)
+**Mar 26 - Apr 1, 2026**
 
-| Day | Hours | Task |
-|-----|-------|------|
-| Mon | 6 | Scaler L12: Kafka deep dive |
-| Tue | 6 | Kafka Docker local setup |
-| Wed | 6 | Spring Kafka basics |
-| Thu | 6 | Cart Service: MongoDB setup |
-| Fri | 6 | Cart Service: API implementation |
-| Sat | 6 | Cart Service: Kafka producer |
-| Sun | 8 | Deploy Cart Service to EKS |
+| Day | Date | Hours | Task |
+|-----|------|-------|------|
+| Thu | Mar 26 | 9 | Scaler L12: Kafka deep dive + Kafka Docker local setup |
+| Fri | Mar 27 | 9 | Spring Kafka basics + producer/consumer implementation |
+| Sat | Mar 28 | 11 | Cart Service: MongoDB setup + schema design |
+| Sun | Mar 29 | 12 | Cart Service: API implementation (add/remove/update cart) |
+| Mon | Mar 30 | 9 | Cart Service: Kafka producer for cart events |
+| Tue | Mar 31 | 9 | Deploy Cart Service to EKS + AWS MSK setup |
+| Wed | Apr 1 | 9 | End-to-end testing + Month 2 review |
 
 #### 📚 Scaler HLD - Lecture 12: Kafka & Zookeeper
 **Topics Covered:**
