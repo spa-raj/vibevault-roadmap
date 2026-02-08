@@ -163,15 +163,15 @@ Based on the PRD/HLD and current progress.
 ### Week 1: Terraform Fundamentals (~68 hours)
 **Feb 5 - Feb 11, 2026**
 
-| Day | Date | Hours | Task |
-|-----|------|-------|------|
+| Day | Date | Hours | Task                                                                                           |
+|-----|------|-------|------------------------------------------------------------------------------------------------|
 | Thu | Feb 5 | 9 | ✅ KodeKloud: Terraform Basics course (intro + HCL + state + providers + modules + AWS section) |
-| Fri | Feb 6 | 9 | ✅ KodeKloud: Terraform Basics course (continued) |
-| Sat | Feb 7 | 11 | ✅ KodeKloud: Terraform Basics course (completed, including AWS with Terraform section) |
-| Sun | Feb 8 | 12 | Scaler L1: System Design 101 + Start writing VPC Terraform module (with Claude + AWS docs) |
-| Mon | Feb 9 | 9 | Scaler L2: Load Balancing & Consistent Hashing + Continue VPC module (subnets, NAT, IGW) |
-| Tue | Feb 10 | 9 | Complete VPC module + start EKS module basics |
-| Wed | Feb 11 | 9 | Continue EKS module + test locally with `terraform plan` |
+| Fri | Feb 6 | 9 | ✅ KodeKloud: Terraform Basics course (continued)                                               |
+| Sat | Feb 7 | 11 | ✅ KodeKloud: Terraform Basics course (completed, including AWS with Terraform section)         |
+| Sun | Feb 8 | 12 | ✅ Scaler L1: System Design 101 + Start writing VPC Terraform module (with Claude + AWS docs)    |
+| Mon | Feb 9 | 9 | Scaler L2: Load Balancing & Consistent Hashing + Continue VPC module (subnets, NAT, IGW)       |
+| Tue | Feb 10 | 9 | Complete VPC module + start EKS module basics                                                  |
+| Wed | Feb 11 | 9 | Continue EKS module + test locally with `terraform plan`                                       |
 
 > **Note:** AWS courses (IAM, RDS, EC2, Workshop) are kept as on-demand references — skim specific sections only if stuck for 30+ minutes and Claude + docs aren't sufficient. Learn IAM roles/policies by writing them in Terraform and debugging real `AccessDenied` errors.
 
