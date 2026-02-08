@@ -141,12 +141,14 @@ Based on the PRD/HLD and current progress.
 
 #### Recommended AWS Courses (KodeKloud)
 
-| Priority | Course | Why | When | Est. Hours |
-|----------|--------|-----|------|------------|
-| 🔴 **HIGH** | [AWS Workshop with Terraform](https://learn.kodekloud.com/courses/learn-by-doing-aws-workshop-with-terraform) | Directly teaches AWS through Terraform - exactly your use case | Week 1-2 | 8-10 hrs |
-| 🔴 **HIGH** | [AWS IAM](https://learn.kodekloud.com/courses/aws-iam) | IAM is #1 source of deployment failures. Needed for EKS roles, IRSA, Jenkins→ECR access | Week 1 | 4-6 hrs |
-| 🟡 **MEDIUM** | [AWS RDS](https://learn.kodekloud.com/courses/aws-rds) | RDS-specific concepts: parameter groups, subnet groups, Multi-AZ | Week 2 | 4-5 hrs |
-| 🟡 **MEDIUM** | [AWS EC2](https://learn.kodekloud.com/courses/amazon-elastic-compute-cloud-ec2) | Useful for EKS worker nodes, networking, security groups, Jenkins on EC2 | Week 2 | 4-5 hrs |
+**Approach: Build-first, course-when-stuck.** Terraform Basics (completed) covered enough AWS fundamentals. Learn AWS services by writing Terraform modules with Claude + official docs. Only take a course if stuck on something for 30+ minutes and Claude + docs aren't cutting it.
+
+| Status | Course | Use As | Est. Hours |
+|--------|--------|--------|------------|
+| 📖 **ON-DEMAND** | [AWS IAM](https://learn.kodekloud.com/courses/aws-iam) | Skim relevant sections if IAM roles/policies/IRSA become confusing during Terraform work | 4-6 hrs |
+| 📖 **ON-DEMAND** | [AWS Workshop with Terraform](https://learn.kodekloud.com/courses/learn-by-doing-aws-workshop-with-terraform) | Reference if stuck on specific AWS+Terraform patterns | 8-10 hrs |
+| 📖 **ON-DEMAND** | [AWS RDS](https://learn.kodekloud.com/courses/aws-rds) | Reference if stuck on parameter groups, subnet groups, Multi-AZ | 4-5 hrs |
+| 📖 **ON-DEMAND** | [AWS EC2](https://learn.kodekloud.com/courses/amazon-elastic-compute-cloud-ec2) | Reference if stuck on security groups, networking, Jenkins on EC2 | 4-5 hrs |
 
 **Courses to Skip (for this project):**
 - ❌ [AWS Solutions Architect Associate](https://learn.kodekloud.com/courses/aws-solutions-architect-associate-certification) - Certification-focused, covers 50+ services. Overkill for your timeline.
@@ -163,15 +165,15 @@ Based on the PRD/HLD and current progress.
 
 | Day | Date | Hours | Task |
 |-----|------|-------|------|
-| Thu | Feb 5 | 9 | KodeKloud: Terraform intro + HCL basics + Terraform state |
-| Fri | Feb 6 | 9 | KodeKloud: Terraform providers + modules |
-| Sat | Feb 7 | 11 | **AWS IAM course** + KodeKloud: Terraform + AWS provider |
-| Sun | Feb 8 | 12 | **AWS Workshop with Terraform (start)** + Scaler L1: System Design 101 |
-| Mon | Feb 9 | 9 | Scaler L2: Load Balancing & Consistent Hashing + Continue AWS Workshop |
-| Tue | Feb 10 | 9 | Hands-on: Write basic VPC module |
-| Wed | Feb 11 | 9 | Continue VPC module + test locally |
+| Thu | Feb 5 | 9 | ✅ KodeKloud: Terraform Basics course (intro + HCL + state + providers + modules + AWS section) |
+| Fri | Feb 6 | 9 | ✅ KodeKloud: Terraform Basics course (continued) |
+| Sat | Feb 7 | 11 | ✅ KodeKloud: Terraform Basics course (completed, including AWS with Terraform section) |
+| Sun | Feb 8 | 12 | Scaler L1: System Design 101 + Start writing VPC Terraform module (with Claude + AWS docs) |
+| Mon | Feb 9 | 9 | Scaler L2: Load Balancing & Consistent Hashing + Continue VPC module (subnets, NAT, IGW) |
+| Tue | Feb 10 | 9 | Complete VPC module + start EKS module basics |
+| Wed | Feb 11 | 9 | Continue EKS module + test locally with `terraform plan` |
 
-> **Note:** AWS IAM fundamentals are critical before writing Terraform modules. Understanding IAM roles, policies, and IRSA will prevent deployment failures in Week 2 and beyond.
+> **Note:** AWS courses (IAM, RDS, EC2, Workshop) are kept as on-demand references — skim specific sections only if stuck for 30+ minutes and Claude + docs aren't sufficient. Learn IAM roles/policies by writing them in Terraform and debugging real `AccessDenied` errors.
 
 #### 📚 Scaler HLD - Lecture 1: System Design 101
 **Topics Covered:**
@@ -207,7 +209,7 @@ Based on the PRD/HLD and current progress.
   - [Hash Functions - Wikipedia](https://en.wikipedia.org/wiki/Hash_function)
   - [Consistent Hashing Explained](https://www.youtube.com/watch?v=UF9Ez834UN4)
 
-**Week 1 Deliverable:** Basic Terraform VPC module
+**Week 1 Deliverable:** Terraform VPC module + EKS module started
 
 ---
 
@@ -216,15 +218,15 @@ Based on the PRD/HLD and current progress.
 
 | Day | Date | Hours | Task |
 |-----|------|-------|------|
-| Thu | Feb 12 | 9 | **AWS Workshop with Terraform (continue)** + Terraform: EKS module basics |
-| Fri | Feb 13 | 9 | **AWS RDS course** + Terraform: RDS module |
-| Sat | Feb 14 | 11 | **AWS EC2 course** + Terraform: ECR module + Scaler L18: Microservices Architecture |
-| Sun | Feb 15 | 12 | Scaler L19: Microservices Communication + Terraform: Wire modules together |
-| Mon | Feb 16 | 9 | Deploy infrastructure to AWS |
+| Thu | Feb 12 | 9 | Complete EKS module + IAM roles for EKS (use Claude + AWS docs) |
+| Fri | Feb 13 | 9 | Terraform: RDS module (parameter groups, subnet groups — reference AWS RDS course if stuck) |
+| Sat | Feb 14 | 11 | Terraform: ECR module + Scaler L18: Microservices Architecture |
+| Sun | Feb 15 | 12 | Scaler L19: Microservices Communication + Wire all Terraform modules together |
+| Mon | Feb 16 | 9 | Deploy infrastructure to AWS (`terraform apply`) |
 | Tue | Feb 17 | 9 | Debug deployment issues + verify all resources |
 | Wed | Feb 18 | 9 | Final infrastructure testing + documentation |
 
-> **Note:** The AWS RDS course teaches RDS-specific concepts (parameter groups, subnet groups, Multi-AZ) that help you write correct Terraform configs. The AWS Workshop with Terraform provides hands-on practice deploying AWS resources via Terraform.
+> **Note:** Freed ~20 hours from dropped AWS courses. This time is now allocated to deeper hands-on Terraform work and earlier module completion. Reference AWS courses on-demand if specific services become blocking.
 
 #### 📚 Scaler HLD - Lecture 18: Monolith vs Microservices
 **Topics Covered:**
