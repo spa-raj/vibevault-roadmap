@@ -168,10 +168,10 @@ Based on the PRD/HLD and current progress.
 | Thu | Feb 5 | 9 | ✅ KodeKloud: Terraform Basics course (intro + HCL + state + providers + modules + AWS section) |
 | Fri | Feb 6 | 9 | ✅ KodeKloud: Terraform Basics course (continued)                                               |
 | Sat | Feb 7 | 11 | ✅ KodeKloud: Terraform Basics course (completed, including AWS with Terraform section)         |
-| Sun | Feb 8 | 12 | ✅ Scaler L1: System Design 101 + Start writing VPC Terraform module (with Claude + AWS docs)    |
-| Mon | Feb 9 | 9 | Scaler L2: Load Balancing & Consistent Hashing + Continue VPC module (subnets, NAT, IGW)       |
-| Tue | Feb 10 | 9 | Complete VPC module + start EKS module basics                                                  |
-| Wed | Feb 11 | 9 | Continue EKS module + test locally with `terraform plan`                                       |
+| Sun | Feb 8 | 12 | ✅ Scaler L1: System Design 101 + Start writing VPC Terraform module (with Claude + AWS docs)   |
+| Mon | Feb 9 | 9 | ✅ Scaler L2: Load Balancing & Consistent Hashing + Continue VPC module (subnets, NAT, IGW)     |
+| Tue | Feb 10 | 9 | ✅ Complete VPC module + start EKS module basics                                                |
+| Wed | Feb 11 | 9 | ✅ Continue EKS module + test locally with `terraform plan`                                      |
 
 > **Note:** AWS courses (IAM, RDS, EC2, Workshop) are kept as on-demand references — skim specific sections only if stuck for 30+ minutes and Claude + docs aren't sufficient. Learn IAM roles/policies by writing them in Terraform and debugging real `AccessDenied` errors.
 
@@ -216,15 +216,15 @@ Based on the PRD/HLD and current progress.
 ### Week 2: Terraform AWS + Infrastructure (~68 hours)
 **Feb 12 - Feb 18, 2026**
 
-| Day | Date | Hours | Task |
-|-----|------|-------|------|
-| Thu | Feb 12 | 9 | Complete EKS module + IAM roles for EKS (use Claude + AWS docs) |
-| Fri | Feb 13 | 9 | Terraform: RDS module (parameter groups, subnet groups — reference AWS RDS course if stuck) |
-| Sat | Feb 14 | 11 | Terraform: ECR module + Scaler L18: Microservices Architecture |
-| Sun | Feb 15 | 12 | Scaler L19: Microservices Communication + Wire all Terraform modules together |
-| Mon | Feb 16 | 9 | Deploy infrastructure to AWS (`terraform apply`) |
-| Tue | Feb 17 | 9 | Debug deployment issues + verify all resources |
-| Wed | Feb 18 | 9 | Final infrastructure testing + documentation |
+| Day | Date | Hours | Task                                                                                          |
+|-----|------|-------|-----------------------------------------------------------------------------------------------|
+| Thu | Feb 12 | 9 | ✅ Complete EKS module + IAM roles for EKS (use Claude + AWS docs)                             |
+| Fri | Feb 13 | 9 | ✅ Terraform: RDS module (parameter groups, subnet groups — reference AWS RDS course if stuck) |
+| Sat | Feb 14 | 11 | Terraform: ECR module + Scaler L18: Microservices Architecture                                |
+| Sun | Feb 15 | 12 | Scaler L19: Microservices Communication + Wire all Terraform modules together                 |
+| Mon | Feb 16 | 9 | Deploy infrastructure to AWS (`terraform apply`)                                              |
+| Tue | Feb 17 | 9 | Debug deployment issues + verify all resources                                                |
+| Wed | Feb 18 | 9 | Final infrastructure testing + documentation                                                  |
 
 > **Note:** Freed ~20 hours from dropped AWS courses. This time is now allocated to deeper hands-on Terraform work and earlier module completion. Reference AWS courses on-demand if specific services become blocking.
 
