@@ -220,7 +220,7 @@ Based on the PRD/HLD and current progress.
 |-----|------|-------|-----------------------------------------------------------------------------------------------|
 | Thu | Feb 12 | 9 | ✅ Complete EKS module + IAM roles for EKS (use Claude + AWS docs)                             |
 | Fri | Feb 13 | 9 | ✅ Terraform: RDS module (parameter groups, subnet groups — reference AWS RDS course if stuck) |
-| Sat | Feb 14 | 11 | Terraform: ECR module + Scaler L18: Microservices Architecture                                |
+| Sat | Feb 14 | 11 | ✅ Terraform: ECR module + Scaler L18: Microservices Architecture                                |
 | Sun | Feb 15 | 12 | Scaler L19: Microservices Communication + Wire all Terraform modules together                 |
 | Mon | Feb 16 | 9 | Deploy infrastructure to AWS (`terraform apply`)                                              |
 | Tue | Feb 17 | 9 | Debug deployment issues + verify all resources                                                |
