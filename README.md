@@ -220,11 +220,11 @@ Based on the PRD/HLD and current progress.
 |-----|------|-------|-----------------------------------------------------------------------------------------------|
 | Thu | Feb 12 | 9 | ✅ Complete EKS module + IAM roles for EKS (use Claude + AWS docs)                             |
 | Fri | Feb 13 | 9 | ✅ Terraform: RDS module (parameter groups, subnet groups — reference AWS RDS course if stuck) |
-| Sat | Feb 14 | 11 | ✅ Terraform: ECR module + Scaler L18: Microservices Architecture                                |
-| Sun | Feb 15 | 12 | Scaler L19: Microservices Communication + Wire all Terraform modules together                 |
-| Mon | Feb 16 | 9 | Deploy infrastructure to AWS (`terraform apply`)                                              |
-| Tue | Feb 17 | 9 | Debug deployment issues + verify all resources                                                |
-| Wed | Feb 18 | 9 | Final infrastructure testing + documentation                                                  |
+| Sat | Feb 14 | 11 | ✅ Terraform: ECR module + Scaler L18: Microservices Architecture                              |
+| Sun | Feb 15 | 12 | ✅ Scaler L19: Microservices Communication + Wire all Terraform modules together               |
+| Mon | Feb 16 | 9 | ✅ Deploy infrastructure to AWS (`terraform apply`)                                            |
+| Tue | Feb 17 | 9 | ✅ Debug deployment issues + verify all resources                                              |
+| Wed | Feb 18 | 9 | ✅ Final infrastructure testing + documentation                                                |
 
 > **Note:** Freed ~20 hours from dropped AWS courses. This time is now allocated to deeper hands-on Terraform work and earlier module completion. Reference AWS courses on-demand if specific services become blocking.
 
@@ -280,15 +280,15 @@ Based on the PRD/HLD and current progress.
 ### Week 3: Kubernetes Fundamentals (~68 hours)
 **Feb 19 - Feb 25, 2026**
 
-| Day | Date | Hours | Task |
-|-----|------|-------|------|
-| Thu | Feb 19 | 9 | KodeKloud: K8s Architecture, Pods, Deployments |
-| Fri | Feb 20 | 9 | KodeKloud: ReplicaSets, Services, Networking |
-| Sat | Feb 21 | 11 | KodeKloud: ConfigMaps, Secrets, Volumes |
-| Sun | Feb 22 | 12 | KodeKloud: Ingress, RBAC, Network Policies |
+| Day | Date | Hours | Task                                                                 |
+|-----|------|-------|----------------------------------------------------------------------|
+| Thu | Feb 19 | 9 | ✅ KodeKloud: K8s Architecture, Pods, Deployments                     |
+| Fri | Feb 20 | 9 | ✅ KodeKloud: ReplicaSets, Services, Networking                       |
+| Sat | Feb 21 | 11 | KodeKloud: ConfigMaps, Secrets, Volumes                              |
+| Sun | Feb 22 | 12 | KodeKloud: Ingress, RBAC, Network Policies                           |
 | Mon | Feb 23 | 9 | Write K8s manifests for userservice (Deployment, Service, ConfigMap) |
-| Tue | Feb 24 | 9 | Write K8s manifests for productservice + Secrets management |
-| Wed | Feb 25 | 9 | Test both services on Minikube + debug issues |
+| Tue | Feb 24 | 9 | Write K8s manifests for productservice + Secrets management          |
+| Wed | Feb 25 | 9 | Test both services on Minikube + debug issues                        |
 
 **Week 3 Deliverable:** K8s manifests for both services (Deployment, Service, ConfigMap, Secrets)
 
