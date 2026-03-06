@@ -280,15 +280,15 @@ Based on the PRD/HLD and current progress.
 ### Week 3: Kubernetes Fundamentals (~68 hours)
 **Feb 19 - Feb 25, 2026**
 
-| Day | Date | Hours | Task                                                                 |
-|-----|------|-------|----------------------------------------------------------------------|
-| Thu | Feb 19 | 9 | ✅ KodeKloud: K8s Architecture, Pods, Deployments                     |
-| Fri | Feb 20 | 9 | ✅ KodeKloud: ReplicaSets, Services, Networking                       |
-| Sat | Feb 21 | 11 | ✅ KodeKloud: ConfigMaps, Secrets, Volumes                            |
-| Sun | Feb 22 | 12 | ✅ KodeKloud: Ingress, RBAC, Network Policies                         |
-| Mon | Feb 23 | 9 | Write K8s manifests for userservice (Deployment, Service, ConfigMap) |
-| Tue | Feb 24 | 9 | Write K8s manifests for productservice + Secrets management          |
-| Wed | Feb 25 | 9 | Test both services on Minikube + debug issues                        |
+| Day | Date | Hours | Task                                                                  |
+|-----|------|-------|-----------------------------------------------------------------------|
+| Thu | Feb 19 | 9 | ✅ KodeKloud: K8s Architecture, Pods, Deployments                      |
+| Fri | Feb 20 | 9 | ✅ KodeKloud: ReplicaSets, Services, Networking                        |
+| Sat | Feb 21 | 11 | ✅ KodeKloud: ConfigMaps, Secrets, Volumes                             |
+| Sun | Feb 22 | 12 | ✅ KodeKloud: Ingress, RBAC, Network Policies                          |
+| Mon | Feb 23 | 9 | ✅ Write K8s manifests for userservice (Deployment, Service, ConfigMap) |
+| Tue | Feb 24 | 9 | Write K8s manifests for productservice + Secrets management           |
+| Wed | Feb 25 | 9 | Test both services on Minikube + debug issues                         |
 
 **Week 3 Deliverable:** K8s manifests for both services (Deployment, Service, ConfigMap, Secrets)
 
