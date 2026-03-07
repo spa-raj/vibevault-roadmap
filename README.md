@@ -297,15 +297,17 @@ Based on the PRD/HLD and current progress.
 ### Week 4: Kubernetes Advanced + Local Testing (~68 hours)
 **Feb 26 - Mar 4, 2026**
 
-| Day | Date | Hours | Task |
-|-----|------|-------|------|
-| Thu | Feb 26 | 9 | KodeKloud: Helm basics + create Helm charts for services |
-| Fri | Feb 27 | 9 | KodeKloud: EKS specifics + aws-load-balancer-controller |
-| Sat | Feb 28 | 11 | Test services on Minikube + debug issues |
-| Sun | Mar 1 | 12 | Scaler L3: Caching + Scaler L4: Redis case study |
-| Mon | Mar 2 | 9 | Advanced debugging + health checks + readiness probes |
-| Tue | Mar 3 | 9 | Resource limits, HPA configuration |
-| Wed | Mar 4 | 9 | Final Minikube testing + prepare for EKS deployment |
+| Day | Date | Hours | Task                                                       |
+|-----|------|-------|------------------------------------------------------------|
+| Thu | Feb 26 | 9 | ✅ KodeKloud: Helm basics + create Helm charts for services |
+| Fri | Feb 27 | 9 | ✅ KodeKloud: EKS specifics + aws-load-balancer-controller  |
+| Sat | Feb 28 | 11 | ✅ Test services on Minikube + debug issues                 |
+| Sun | Mar 1 | 12 | Scaler L3: Caching + Scaler L4: Redis case study           |
+| Mon | Mar 2 | 9 | ✅ Advanced debugging + health checks + readiness probes    |
+| Tue | Mar 3 | 9 | ✅ Resource limits (configured in Helm values.yaml for all containers) |
+| Wed | Mar 4 | 9 | ✅ Final Minikube testing + API integration tests for Helm-deployed services |
+
+> **Note:** HPA (Horizontal Pod Autoscaler) deferred to Week 5 (EKS deployment) — requires metrics-server and real load testing to tune thresholds. Resource limits are already set in Helm charts.
 
 #### 📚 Scaler HLD - Lecture 3: Caching
 **Topics Covered:**
@@ -372,9 +374,9 @@ Based on the PRD/HLD and current progress.
 | Sun | Mar 8 | 12 | Install Kong Ingress Controller + configure routes |
 | Mon | Mar 9 | 9 | AWS ALB setup + SSL/TLS configuration |
 | Tue | Mar 10 | 9 | DNS setup (Route53) + health checks |
-| Wed | Mar 11 | 9 | End-to-end testing + capture baseline benchmarks |
+| Wed | Mar 11 | 9 | End-to-end testing + HPA configuration + capture baseline benchmarks |
 
-**Week 5 Deliverable:** Both services running on EKS with Kong API Gateway
+**Week 5 Deliverable:** Both services running on EKS with Kong API Gateway + HPA configured
 
 **📊 Benchmark Checkpoint:** Capture baseline API response times for User + Product services (save for Week 13-14 comparison)
 
