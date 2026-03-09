@@ -297,14 +297,14 @@ Based on the PRD/HLD and current progress.
 ### Week 4: Kubernetes Advanced + Local Testing (~68 hours)
 **Feb 26 - Mar 4, 2026**
 
-| Day | Date | Hours | Task                                                       |
-|-----|------|-------|------------------------------------------------------------|
-| Thu | Feb 26 | 9 | ✅ KodeKloud: Helm basics + create Helm charts for services |
-| Fri | Feb 27 | 9 | ✅ KodeKloud: EKS specifics + aws-load-balancer-controller  |
-| Sat | Feb 28 | 11 | ✅ Test services on Minikube + debug issues                 |
-| Sun | Mar 1 | 12 | Scaler L3: Caching + Scaler L4: Redis case study           |
-| Mon | Mar 2 | 9 | ✅ Advanced debugging + health checks + readiness probes    |
-| Tue | Mar 3 | 9 | ✅ Resource limits (configured in Helm values.yaml for all containers) |
+| Day | Date | Hours | Task                                                                        |
+|-----|------|-------|-----------------------------------------------------------------------------|
+| Thu | Feb 26 | 9 | ✅ KodeKloud: Helm basics + create Helm charts for services                  |
+| Fri | Feb 27 | 9 | ✅ KodeKloud: EKS specifics + aws-load-balancer-controller                   |
+| Sat | Feb 28 | 11 | ✅ Test services on Minikube + debug issues                                  |
+| Sun | Mar 1 | 12 | ✅ Scaler L3: Caching + Scaler L4: Redis case study                          |
+| Mon | Mar 2 | 9 | ✅ Advanced debugging + health checks + readiness probes                     |
+| Tue | Mar 3 | 9 | ✅ Resource limits (configured in Helm values.yaml for all containers)       |
 | Wed | Mar 4 | 9 | ✅ Final Minikube testing + API integration tests for Helm-deployed services |
 
 > **Note:** HPA (Horizontal Pod Autoscaler) deferred to Week 5 (EKS deployment) — requires metrics-server and real load testing to tune thresholds. Resource limits are already set in Helm charts.
