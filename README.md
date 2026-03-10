@@ -366,14 +366,14 @@ Based on the PRD/HLD and current progress.
 ### Week 5: Deploy to EKS + Kong (~68 hours)
 **Mar 5 - Mar 11, 2026**
 
-| Day | Date | Hours | Task |
-|-----|------|-------|------|
-| Thu | Mar 5 | 9 | Deploy userservice to EKS + verify pods running |
-| Fri | Mar 6 | 9 | Deploy productservice to EKS + verify pods running |
-| Sat | Mar 7 | 11 | Debug networking, service discovery, inter-service communication |
-| Sun | Mar 8 | 12 | Install Kong Ingress Controller + configure routes |
-| Mon | Mar 9 | 9 | AWS ALB setup + SSL/TLS configuration |
-| Tue | Mar 10 | 9 | DNS setup (Route53) + health checks |
+| Day | Date | Hours | Task                                                               |
+|-----|------|-------|--------------------------------------------------------------------|
+| Thu | Mar 5 | 9 | ✅ Deploy userservice to EKS + verify pods running                  |
+| Fri | Mar 6 | 9 | ✅ Deploy productservice to EKS + verify pods running               |
+| Sat | Mar 7 | 11 | Debug networking, service discovery, inter-service communication   |
+| Sun | Mar 8 | 12 | Install Kong Ingress Controller + configure routes                 |
+| Mon | Mar 9 | 9 | AWS ALB setup + SSL/TLS configuration                              |
+| Tue | Mar 10 | 9 | DNS setup (Route53) + health checks                                |
 | Wed | Mar 11 | 9 | End-to-end testing + HPA configuration + capture baseline benchmarks |
 
 **Week 5 Deliverable:** Both services running on EKS with Kong API Gateway + HPA configured
