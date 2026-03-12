@@ -20,9 +20,15 @@ set -euo pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 USERSERVICE="http://localhost:8081"
 PRODUCTSERVICE="http://localhost:8080"
+NAMESPACE="${NAMESPACE:-vibevault}"
 PASS=0
 FAIL=0
 SKIP=0
+
+# Pull credentials from K8s secrets (fallback to env vars if set)
+ADMIN_PASSWORD="${ADMIN_PASSWORD:-$(kubectl get secret userservice-secret -n "$NAMESPACE" -o jsonpath='{.data.ADMIN_PASSWORD}' | base64 -d)}"
+CLIENT_SECRET="${CLIENT_SECRET:-$(kubectl get secret userservice-secret -n "$NAMESPACE" -o jsonpath='{.data.CLIENT_SECRET}' | base64 -d)}"
+export ADMIN_PASSWORD CLIENT_SECRET
 
 # Colors
 GREEN='\033[0;32m'
@@ -94,7 +100,8 @@ echo "--- Userservice: Auth APIs ---"
 # --------------------------------------------------
 
 # Login as admin
-request POST "$USERSERVICE/auth/login" "Content-Type: application/json" '{"email":"admin@gmail.com","password":"abcd@1234"}'
+ADMIN_LOGIN_JSON=$(python3 -c "import json,os; print(json.dumps({'email':'admin@gmail.com','password':os.environ['ADMIN_PASSWORD']}))")
+request POST "$USERSERVICE/auth/login" "Content-Type: application/json" "$ADMIN_LOGIN_JSON"
 assert_status "POST /auth/login (admin)" "200" "$STATUS"
 ADMIN_TOKEN=$(echo "$BODY" | python3 -c "import sys,json; print(json.load(sys.stdin)['token'])" 2>/dev/null || echo "")
 
@@ -190,7 +197,7 @@ if [ -z "${TOKEN:-}" ]; then
     echo ""
     echo "  Obtaining OAuth2 token automatically..."
 
-    TOKEN_OUTPUT=$("$SCRIPT_DIR/get-oauth2-token.sh" admin@gmail.com abcd@1234 2>&1) || true
+    TOKEN_OUTPUT=$("$SCRIPT_DIR/get-oauth2-token.sh" admin@gmail.com "$ADMIN_PASSWORD" 2>&1) || true
     TOKEN=$(echo "$TOKEN_OUTPUT" | tail -1)
 
     # Verify it looks like a JWT (3 dot-separated parts)
@@ -296,11 +303,16 @@ fi
 request GET "$PRODUCTSERVICE/search/products?page=0&size=10"
 assert_status "GET /search/products" "200" "$STATUS"
 
-request GET "$PRODUCTSERVICE/search/products?query=$TEST_PRODUCT_NAME&page=0&size=10"
-assert_status "GET /search/products?query=" "200" "$STATUS"
+if [ -n "${TEST_PRODUCT_NAME:-}" ]; then
+    request GET "$PRODUCTSERVICE/search/products?query=$TEST_PRODUCT_NAME&page=0&size=10"
+    assert_status "GET /search/products?query=" "200" "$STATUS"
 
-request GET "$PRODUCTSERVICE/search/products/suggest?prefix=${TEST_PRODUCT_NAME:0:4}&limit=5"
-assert_status "GET /search/products/suggest" "200" "$STATUS"
+    request GET "$PRODUCTSERVICE/search/products/suggest?prefix=${TEST_PRODUCT_NAME:0:4}&limit=5"
+    assert_status "GET /search/products/suggest" "200" "$STATUS"
+else
+    skip_test "GET /search/products?query= (no product created)"
+    skip_test "GET /search/products/suggest (no product created)"
+fi
 
 # --------------------------------------------------
 echo ""

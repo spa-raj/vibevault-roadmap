@@ -7,29 +7,35 @@
 #
 # Prerequisites:
 #   - userservice running and port-forwarded to localhost:8081
-#   - User account exists (admin@gmail.com / abcd@1234 is seeded by default)
+#   - User account exists (credentials pulled from K8s secrets automatically)
 #
 # Usage:
 #   ./get-oauth2-token.sh                                          # admin token
 #   ./get-oauth2-token.sh seller@gmail.com sell@1234               # seller token
-#   ./get-oauth2-token.sh admin@gmail.com abcd@1234 8081           # custom port
+#   ./get-oauth2-token.sh admin@gmail.com <password> 8081           # custom port
 #   source ./get-oauth2-token.sh                                   # exports TOKEN
 # ==============================================================================
 
 set -euo pipefail
 
+NAMESPACE="${NAMESPACE:-vibevault}"
 USERNAME="${1:-admin@gmail.com}"
-PASSWORD="${2:-abcd@1234}"
+PASSWORD="${2:-${ADMIN_PASSWORD:-$(kubectl get secret userservice-secret -n "$NAMESPACE" -o jsonpath='{.data.ADMIN_PASSWORD}' | base64 -d)}}"
 USERSERVICE_PORT="${3:-8081}"
 USERSERVICE_URL="http://localhost:${USERSERVICE_PORT}"
 CLIENT_ID="vibevault-client"
-CLIENT_SECRET="abc@12345"
+CLIENT_SECRET="${CLIENT_SECRET:-$(kubectl get secret userservice-secret -n "$NAMESPACE" -o jsonpath='{.data.CLIENT_SECRET}' | base64 -d)}"
 REDIRECT_URI="https://oauth.pstmn.io/v1/callback"
 SCOPES="openid+profile+email+read+write"
 COOKIE_JAR=$(mktemp /tmp/oauth2_cookies.XXXXXX)
 
 cleanup() { rm -f "$COOKIE_JAR"; }
 trap cleanup EXIT
+
+# URL-encode a string (handles special chars like &, =, <, etc.)
+urlencode() {
+    python3 -c "import urllib.parse,sys; print(urllib.parse.quote(sys.argv[1], safe=''))" "$1"
+}
 
 AUTH_URL="${USERSERVICE_URL}/oauth2/authorize?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPES}"
 
@@ -53,8 +59,9 @@ if [ -z "$CSRF" ]; then
 fi
 
 # Step 3: POST login with credentials
+ENCODED_PASSWORD=$(urlencode "$PASSWORD")
 LOGIN_RESPONSE=$(curl -s -D- -o /dev/null -c "$COOKIE_JAR" -b "$COOKIE_JAR" -X POST "${USERSERVICE_URL}/login" \
-    -d "username=${USERNAME}&password=${PASSWORD}&_csrf=${CSRF}")
+    -d "username=${USERNAME}&password=${ENCODED_PASSWORD}&_csrf=${CSRF}")
 
 LOGIN_LOCATION=$(echo "$LOGIN_RESPONSE" | grep -i "^Location:" | tr -d '\r')
 
@@ -68,16 +75,16 @@ echo "  [1/4] Login successful"
 # Step 4: Follow redirect back to /oauth2/authorize → get consent page or code
 AUTHORIZE_RESPONSE=$(curl -s -D- -c "$COOKIE_JAR" -b "$COOKIE_JAR" "${USERSERVICE_URL}/oauth2/authorize?response_type=code&client_id=${CLIENT_ID}&redirect_uri=${REDIRECT_URI}&scope=${SCOPES}&continue")
 
-AUTHORIZE_LOCATION=$(echo "$AUTHORIZE_RESPONSE" | grep -i "^Location:" | tr -d '\r')
+AUTHORIZE_LOCATION=$(echo "$AUTHORIZE_RESPONSE" | grep -i "^Location:" | tr -d '\r' || true)
 
 # Check if we got redirected directly to callback (consent already given)
 if echo "$AUTHORIZE_LOCATION" | grep -q "code="; then
     AUTH_CODE=$(echo "$AUTHORIZE_LOCATION" | grep -oP 'code=\K[^&]+')
     echo "  [2/4] Consent already granted (reused)"
 else
-    # Need to submit consent form
+    # Need to submit consent form — extract state from HTML (may be single-line)
     CONSENT_BODY=$(echo "$AUTHORIZE_RESPONSE" | sed '1,/^\r$/d')
-    STATE=$(echo "$CONSENT_BODY" | grep -oP 'name="state".*?value="\K[^"]+')
+    STATE=$(echo "$CONSENT_BODY" | grep -oP 'name="state"[^>]*value="\K[^"]+' || true)
 
     if [ -z "$STATE" ]; then
         echo "Error: Could not extract state from consent page."
