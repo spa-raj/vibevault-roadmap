@@ -74,9 +74,15 @@ Based on the PRD/HLD and current progress.
 ---
 
 ## Current State
-- ✅ User Management Service (userservice)
-- ✅ Product Catalog Service (productservice)
+- ✅ User Management Service (userservice) — deployed on EKS
+- ✅ Product Catalog Service (productservice) — deployed on EKS
 - ✅ Docker containerization
+- ✅ Terraform IaC (VPC, EKS, RDS, ECR, Secrets Manager, KMS)
+- ✅ Helm charts with db-init hooks + ExternalSecrets
+- ✅ GitHub Actions CI/CD (Build → ECR → Helm deploy)
+- ✅ Automated API test suite (29 endpoints passing)
+- ✅ Scaler HLD lectures 1-4, 18-19
+- ⏳ Next: Elasticsearch (Week 7), Kafka + Cart Service (Week 8)
 
 ---
 
@@ -370,13 +376,15 @@ Based on the PRD/HLD and current progress.
 |-----|------|-------|--------------------------------------------------------------------|
 | Thu | Mar 5 | 9 | ✅ Deploy userservice to EKS + verify pods running                  |
 | Fri | Mar 6 | 9 | ✅ Deploy productservice to EKS + verify pods running               |
-| Sat | Mar 7 | 11 | Debug networking, service discovery, inter-service communication   |
-| Sun | Mar 8 | 12 | Install Kong Ingress Controller + configure routes                 |
-| Mon | Mar 9 | 9 | AWS ALB setup + SSL/TLS configuration                              |
-| Tue | Mar 10 | 9 | DNS setup (Route53) + health checks                                |
-| Wed | Mar 11 | 9 | End-to-end testing + HPA configuration + capture baseline benchmarks |
+| Sat | Mar 7 | 11 | ✅ Debug networking, CrashLoopBackOff, DB access denied issues      |
+| Sun | Mar 8 | 12 | ✅ Helm pre-install/pre-upgrade hooks for DB user initialization    |
+| Mon | Mar 9 | 9 | ✅ Fix Spring Boot `${...}` password placeholder issue (Terraform override_special) |
+| Tue | Mar 10 | 9 | ✅ ExternalSecrets sync debugging + OAuth2 token flow fixes         |
+| Wed | Mar 11 | 9 | ✅ End-to-end API testing (29/29 tests passing on EKS)             |
 
-**Week 5 Deliverable:** Both services running on EKS with Kong API Gateway + HPA configured
+> **Note:** Kong Ingress Controller, ALB, SSL/TLS, DNS (Route53), and HPA deferred — focus shifted to debugging EKS deployment issues, implementing Helm db-init hooks, and fixing secret management. These will be addressed in a later week.
+
+**Week 5 Deliverable:** ~~Both services running on EKS with Kong API Gateway + HPA configured~~ Both services running on EKS with Helm charts, db-init hooks, ExternalSecrets, and 29/29 API tests passing
 
 **📊 Benchmark Checkpoint:** Capture baseline API response times for User + Product services (save for Week 13-14 comparison)
 
@@ -387,15 +395,17 @@ Based on the PRD/HLD and current progress.
 
 | Day | Date | Hours | Task |
 |-----|------|-------|------|
-| Thu | Mar 12 | 9 | KodeKloud: Jenkins fundamentals + Jenkins setup on EC2 |
-| Fri | Mar 13 | 9 | Jenkins: Create pipeline for productservice (build + test) |
-| Sat | Mar 14 | 11 | Jenkins: SonarQube integration + code quality gates |
-| Sun | Mar 15 | 12 | Jenkins: ECR push + EKS deploy stages |
-| Mon | Mar 16 | 9 | Pipeline for userservice + shared pipeline libraries |
-| Tue | Mar 17 | 9 | Test full CI/CD flow + webhook triggers |
-| Wed | Mar 18 | 9 | Pipeline optimization + measure build/deploy times |
+| Thu | Mar 12 | 9 | ✅ GitHub Actions CI/CD for userservice (build + push to ECR + Helm deploy to EKS) |
+| Fri | Mar 13 | 9 | ✅ GitHub Actions CI/CD for productservice (same pipeline pattern) |
+| Sat | Mar 14 | 11 | ✅ PR review fixes: --create-namespace, concurrency group, image_repo output between jobs |
+| Sun | Mar 15 | 12 | ✅ Helm db-init hooks in CI/CD (pre-install/pre-upgrade for DB user creation) |
+| Mon | Mar 16 | 9 | ✅ Debug deployment pipeline issues (pending-upgrade rollback, secret sync) |
+| Tue | Mar 17 | 9 | ✅ Automated API test scripts (OAuth2 token flow + 29-endpoint integration test suite) |
+| Wed | Mar 18 | 9 | ✅ eks-connect.sh automation script + screenshot organization for capstone report |
 
-**Week 6 Deliverable:** Automated pipeline: Build → Test → SonarQube → ECR → EKS
+> **Note:** Used GitHub Actions instead of Jenkins for CI/CD. SonarQube deferred. Pipeline: Build → Push to ECR → Helm upgrade to EKS (with db-init hooks).
+
+**Week 6 Deliverable:** ~~Automated pipeline: Build → Test → SonarQube → ECR → EKS~~ GitHub Actions CI/CD: Build → ECR Push → Helm Deploy to EKS (both services)
 
 **📊 Benchmark Checkpoint:** Measure CI/CD pipeline duration (build time, deploy time)
 
@@ -552,12 +562,12 @@ GitOps repo
 
 **Month 2 Milestone:**
 ```
-✅ 3 microservices on EKS (User, Product, Cart)
-✅ Jenkins CI/CD pipeline with SonarQube
-✅ Kong API Gateway routing traffic
-✅ Elasticsearch-powered product search
-✅ Kafka for async communication
-✅ MongoDB for Cart Service
+✅ 2 microservices on EKS (User, Product) — with Helm charts, db-init hooks, ExternalSecrets
+✅ GitHub Actions CI/CD pipeline (Build → ECR → Helm deploy)
+⏳ Kong API Gateway routing traffic
+⏳ Elasticsearch-powered product search
+⏳ Kafka for async communication
+⏳ Cart Service with MongoDB
 📊 Baseline benchmarks captured for all deployed services
 ```
 
@@ -1061,21 +1071,21 @@ For each optimization, document:
 
 ## Curriculum ↔ Project Mapping
 
-| Scaler HLD Lecture | Topic | VibeVault Application | When |
-|--------------------|-------|----------------------|------|
-| 1 | System Design 101, DNS, LB | AWS ALB, Route53, Health checks | Week 1 |
-| 2 | Consistent Hashing, Sharding | Database design, future scaling | Week 1 |
-| 3-4 | Caching, Redis | Redis for Cart, search cache | Week 4 |
-| 5 | Facebook News Feed | Fan-out pattern understanding | Week 4 |
-| 6 | CAP/PACELC, Replication | RDS Read Replicas | Post Month 2 |
-| 7 | SQL vs NoSQL | MySQL vs MongoDB for Cart | Week 8 |
-| 8 | Database Orchestration | RDS Multi-AZ, failover | Post Month 2 |
-| 9 | Typeahead | Product suggestions ✅ (built!) | Week 7 |
-| 12 | Kafka & Zookeeper | Event-driven architecture | Week 8 |
-| 13 | Elasticsearch | Product full-text search | Week 7 |
-| 18 | Microservices Architecture | Kong, VPC, service design | Week 2 |
-| 19 | Communication, Observability | gRPC/REST, ELK stack, tracing | Week 2 |
-| 20 | Distributed Transactions | Saga pattern for Order→Payment | Post Month 2 |
+| Scaler HLD Lecture | Topic | VibeVault Application | When | Status |
+|--------------------|-------|----------------------|------|--------|
+| 1 | System Design 101, DNS, LB | AWS ALB, Route53, Health checks | Week 1 | ✅ Studied |
+| 2 | Consistent Hashing, Sharding | Database design, future scaling | Week 1 | ✅ Studied |
+| 3-4 | Caching, Redis | Redis for Cart, search cache | Week 4 | ✅ Studied |
+| 5 | Facebook News Feed | Fan-out pattern understanding | Week 4 | |
+| 6 | CAP/PACELC, Replication | RDS Read Replicas | Post Month 2 | |
+| 7 | SQL vs NoSQL | MySQL vs MongoDB for Cart | Week 8 | |
+| 8 | Database Orchestration | RDS Multi-AZ, failover | Post Month 2 | |
+| 9 | Typeahead | Product suggestions | Week 7 | |
+| 12 | Kafka & Zookeeper | Event-driven architecture | Week 8 | |
+| 13 | Elasticsearch | Product full-text search | Week 7 | |
+| 18 | Microservices Architecture | VPC, service design | Week 2 | ✅ Studied |
+| 19 | Communication, Observability | gRPC/REST, ELK stack, tracing | Week 2 | ✅ Studied |
+| 20 | Distributed Transactions | Saga pattern for Order→Payment | Post Month 2 | |
 
 ---
 
@@ -1095,7 +1105,7 @@ For each optimization, document:
 | API Gateway | Kong (self-hosted) | Routing, rate limiting |
 | Secrets | Secrets Manager | Credentials management |
 | Infrastructure | Terraform | IaC |
-| CI/CD | Jenkins | Build & deploy automation |
+| CI/CD | GitHub Actions | Build & deploy automation (originally planned Jenkins) |
 | GitOps (Stretch) | ArgoCD | Declarative K8s deployments |
 | Code Quality | SonarQube | Static analysis |
 
@@ -1103,26 +1113,32 @@ For each optimization, document:
 
 ## 2-Month Achievement Summary
 
-### What You'll Complete (~70% of roadmap)
+### What's Completed So Far
 ```
-✅ Terraform IaC managing all AWS resources
-✅ EKS cluster with 3 microservices (User, Product, Cart)
-✅ Jenkins CI/CD pipeline with SonarQube
-✅ Kong API Gateway
-✅ Elasticsearch-powered product search
-✅ Kafka for async communication
-✅ MongoDB for Cart Service
-🎯 (Stretch) ArgoCD for GitOps deployments
+✅ Terraform IaC managing all AWS resources (VPC, EKS, RDS, ECR, Secrets Manager, KMS)
+✅ EKS cluster with 2 microservices (User, Product)
+✅ Helm charts with db-init hooks + ExternalSecrets integration
+✅ GitHub Actions CI/CD pipeline (Build → ECR → Helm deploy)
+✅ Automated API test suite (29 endpoints, OAuth2 token flow)
+✅ Scaler HLD lectures 1-4, 18-19 completed
+✅ Class diagrams + database schema designs (dbdiagram.io)
+✅ 50+ organized screenshots for capstone report
 ```
 
-### Remaining for Month 3+ (~30% of roadmap + benchmarking)
+### Remaining (~50% of roadmap + benchmarking)
 ```
+⏳ Kong API Gateway / ALB / SSL/TLS / DNS (Route53)
+⏳ Elasticsearch-powered product search
+⏳ Kafka for async communication
+⏳ Cart Service with MongoDB
 ⏳ Order Service with Saga pattern (~60 hrs)
 ⏳ Payment Service (~30 hrs)
 ⏳ Notification Service with SES (~30 hrs)
 ⏳ Redis caching layer (~10 hrs)
-⏳ Performance Benchmarking & Optimization (~70 hrs) ← NEW
+⏳ Performance Benchmarking & Optimization (~70 hrs)
 ⏳ Production hardening (~20 hrs)
+⏳ SonarQube integration
+🎯 (Stretch) ArgoCD for GitOps deployments
 ```
 
 **Total Post Month-2 Effort: ~220 hours**
@@ -1146,9 +1162,9 @@ For each optimization, document:
 
 ```
 ✅ Real deployed project (not just localhost)
-✅ Microservices architecture (3 services)
+✅ Microservices architecture (2 services so far, more coming)
 ✅ Cloud experience (AWS EKS, RDS, ECR)
-✅ DevOps skills (Terraform, K8s, Jenkins CI/CD)
+✅ DevOps skills (Terraform, K8s, Helm, GitHub Actions CI/CD)
 ✅ Search (Elasticsearch)
 ✅ Event-driven (Kafka)
 ✅ API Gateway (Kong)
@@ -1400,19 +1416,19 @@ The core roadmap covers ~60-70% of DevOps skills. Complete these optional module
 | Config Management (Ansible) | Not covered | ❌ Gap |
 | Service Mesh (Istio) | Not covered | ❌ Gap |
 | Centralized Logging (ELK) | Not covered | ❌ Gap |
-| Helm Charts | Not covered | ❌ Gap |
-| Advanced Scripting | Not covered | ❌ Gap |
+| Helm Charts | Full | ✅ Ready (both services with db-init hooks) |
+| Advanced Scripting | Partial | ⚠️ Basic (eks-connect.sh, API test scripts) |
 
-### Optional Module 1: Helm Charts (6 hours)
+### ✅ Optional Module 1: Helm Charts (6 hours) — COMPLETED
 
-Convert Kubernetes manifests to Helm charts for better package management.
+Converted Kubernetes manifests to Helm charts for both services.
 
 | Task | Hours | Description |
 |------|-------|-------------|
-| Helm fundamentals | 2 | KodeKloud or official docs |
-| Create userservice chart | 1.5 | Chart.yaml, values.yaml, templates/ |
-| Create productservice chart | 1.5 | Parameterize environment-specific values |
-| Test with `helm install` | 1 | Deploy to Minikube/EKS |
+| ✅ Helm fundamentals | 2 | KodeKloud + official docs |
+| ✅ Create userservice chart | 1.5 | Chart.yaml, values.yaml, templates/ (incl. db-init hook) |
+| ✅ Create productservice chart | 1.5 | Parameterized values, ExternalSecrets, db-init hook |
+| ✅ Test with `helm install` | 1 | Deployed to both Minikube and EKS |
 
 **Deliverable:**
 ```
@@ -1664,24 +1680,24 @@ tcpdump                 # Packet capture
 
 ### DevOps Skills Summary
 
-| Module | Hours | Priority | Impact |
-|--------|-------|----------|--------|
-| Helm Charts | 6 | High | K8s package management |
-| ArgoCD GitOps | 8 | High | Modern CI/CD |
-| Ansible | 10 | Medium | Config management |
-| ELK Stack | 8 | Medium | Observability |
-| Istio | 10 | Low | Advanced microservices |
-| Scripting | 8 | Medium | Automation |
-| Linux Admin | 10 | Medium | Troubleshooting |
-| **Total** | **60** | | |
+| Module | Hours | Priority | Impact | Status |
+|--------|-------|----------|--------|--------|
+| Helm Charts | 6 | High | K8s package management | ✅ Done |
+| ArgoCD GitOps | 8 | High | Modern CI/CD | |
+| Ansible | 10 | Medium | Config management | |
+| ELK Stack | 8 | Medium | Observability | |
+| Istio | 10 | Low | Advanced microservices | |
+| Scripting | 8 | Medium | Automation | ⚠️ Partial |
+| Linux Admin | 10 | Medium | Troubleshooting | |
+| **Total** | **60** | | | |
 
 ### Recommended Order (If Limited Time)
 
 ```
-Must Do (14 hrs):     Helm + ArgoCD
+Must Do (14 hrs):     ✅ Helm (DONE) + ArgoCD (remaining)
                       → Makes you stand out in DevOps interviews
 
-Should Do (18 hrs):   + Ansible + Scripting
+Should Do (18 hrs):   + Ansible + Scripting (partially done)
                       → Covers traditional DevOps gaps
 
 Nice to Have (28 hrs): + ELK + Linux Admin + Istio
