@@ -1804,6 +1804,7 @@ For SDE 2, you need ~80-100 well-understood problems (not 200+ like for junior r
 #### Topic-Wise Problem List
 
 **Arrays & Strings (15 problems)**
+
 | # | Problem | Difficulty | Pattern |
 |---|---------|------------|---------|
 | 1 | Two Sum | Easy | Hashing |
@@ -1823,6 +1824,7 @@ For SDE 2, you need ~80-100 well-understood problems (not 200+ like for junior r
 | 15 | Minimum Window Substring | Hard | Sliding Window |
 
 **Trees & Graphs (27 problems)**
+
 | # | Problem | Difficulty | Pattern |
 |---|---------|------------|---------|
 | 1 | Invert Binary Tree | Easy | Recursion |
@@ -1842,6 +1844,7 @@ For SDE 2, you need ~80-100 well-understood problems (not 200+ like for junior r
 | 15 | Alien Dictionary | Hard | Topological Sort |
 
 **Dynamic Programming (20 problems)**
+
 | # | Problem | Difficulty | Pattern |
 |---|---------|------------|---------|
 | 1 | Climbing Stairs | Easy | 1D DP |
@@ -1861,6 +1864,7 @@ For SDE 2, you need ~80-100 well-understood problems (not 200+ like for junior r
 | 15 | Longest Palindromic Subsequence | Medium | 2D DP |
 
 **System Design-ish DSA (8 problems)**
+
 | # | Problem | Difficulty | Why Important |
 |---|---------|------------|---------------|
 | 1 | LRU Cache | Medium | Asked frequently |
@@ -2056,6 +2060,7 @@ knowledge with backend development to build scalable, secure systems."
 #### Common Behavioral Questions
 
 **About Career Transition:**
+
 | Question | How to Answer |
 |----------|---------------|
 | "Why switch from cloud to backend?" | "Want to build what I've been securing" |
@@ -2063,6 +2068,7 @@ knowledge with backend development to build scalable, secure systems."
 | "Will you go back to cloud roles?" | "Backend + Cloud = Platform Engineering is my goal" |
 
 **About Your Project:**
+
 | Question | How to Answer |
 |----------|---------------|
 | "Why did you choose this architecture?" | Explain trade-offs (monolith vs microservices, etc.) |
@@ -2070,6 +2076,7 @@ knowledge with backend development to build scalable, secure systems."
 | "What would you do differently?" | Be honest, show growth mindset |
 
 **General:**
+
 | Question | Your STAR Story |
 |----------|-----------------|
 | "Tell me about a time you disagreed with someone" | Prepare from Accenture |
