@@ -81,8 +81,8 @@ Based on the PRD/HLD and current progress.
 - ✅ Helm charts with db-init hooks + ExternalSecrets
 - ✅ GitHub Actions CI/CD (Build → ECR → Helm deploy)
 - ✅ Automated API test suite (29 endpoints passing)
-- ✅ Scaler HLD lectures 1-4, 18-19
-- ⏳ Next: Elasticsearch (Week 7), Kafka + Cart Service (Week 8)
+- ✅ Scaler HLD lectures 1-4, 9, 13, 18-19
+- ⏳ Next: Compressed sprint to complete all remaining services by Mar 31 (capstone deadline)
 
 ---
 
@@ -446,18 +446,21 @@ GitOps repo
 
 ---
 
-### Week 7: Elasticsearch Integration (~68 hours)
-**Mar 19 - Mar 25, 2026**
+### Compressed Sprint: All Remaining Services (~180 hours)
+**Mar 14 - Mar 31, 2026** (Capstone deadline: Mar 31)
 
-| Day | Date | Hours | Task                                                                |
-|-----|------|-------|---------------------------------------------------------------------|
-| Thu | Mar 19 | 9 | ✅ Scaler L9: Typeahead design + Scaler L13: Elasticsearch deep dive |
-| Fri | Mar 20 | 9 | ES Docker local setup + basic queries                               |
-| Sat | Mar 21 | 11 | Implement SearchServiceESImpl + index mapping                       |
-| Sun | Mar 22 | 12 | Index products + test search + fuzzy matching                       |
-| Mon | Mar 23 | 9 | Relevance tuning + autocomplete suggestions                         |
-| Tue | Mar 24 | 9 | Deploy ES to AWS OpenSearch + configure VPC access                  |
-| Wed | Mar 25 | 9 | Benchmark: MySQL LIKE vs Elasticsearch latency                      |
+> **Note:** Timeline compressed from original Week 7-12 plan. Using Claude for coding to accelerate implementation. Lectures compressed to half-day each, focusing on concepts directly needed for implementation.
+
+#### Phase 1: Elasticsearch Integration (Mar 14-17)
+
+| Day | Date | Hours | Task |
+|-----|------|-------|------|
+| Sat | Mar 14 | 11 | ✅ Scaler L9 (Typeahead) + ✅ Scaler L13 (Elasticsearch) + ES Docker local setup |
+| Sun | Mar 15 | 12 | Implement SearchServiceESImpl + index mapping + index products + fuzzy matching |
+| Mon | Mar 16 | 9 | Relevance tuning + autocomplete + benchmark MySQL LIKE vs ES |
+| Tue | Mar 17 | 9 | Deploy ES to AWS OpenSearch + configure VPC access |
+
+**Phase 1 Deliverable:** Elasticsearch-powered product search with MySQL vs ES benchmark
 
 #### 📚 Scaler HLD - Lecture 9: Typeahead (Google, Amazon)
 **Topics Covered:**
@@ -502,24 +505,21 @@ GitOps repo
   - [Mini Beginner's Crash Course - YouTube](https://www.youtube.com/watch?v=gS_nHTWZEJ8)
   - [Shard Placement - AWS Blog](https://aws.amazon.com/blogs/opensource/demystifying-elasticsearch-shard-allocation/)
 
-**Week 7 Deliverable:** Elasticsearch-powered product search
-
-**📊 Benchmark Checkpoint:** Compare MySQL LIKE vs Elasticsearch search latency (critical for capstone report!)
-
 ---
 
-### Week 8: Kafka + Cart Service (~68 hours)
-**Mar 26 - Apr 1, 2026**
+#### Phase 2: Kafka + Cart Service (Mar 18-22)
 
 | Day | Date | Hours | Task |
 |-----|------|-------|------|
-| Thu | Mar 26 | 9 | Scaler L12: Kafka deep dive + Kafka Docker local setup |
-| Fri | Mar 27 | 9 | Spring Kafka basics + producer/consumer implementation |
-| Sat | Mar 28 | 11 | Cart Service: MongoDB setup + schema design |
-| Sun | Mar 29 | 12 | Cart Service: API implementation (add/remove/update cart) |
-| Mon | Mar 30 | 9 | Cart Service: Kafka producer for cart events |
-| Tue | Mar 31 | 9 | Deploy Cart Service to EKS + AWS MSK setup |
-| Wed | Apr 1 | 9 | End-to-end testing + Month 2 review |
+| Wed | Mar 18 | 9 | Scaler L12 (Kafka, compressed) + Kafka Docker local setup |
+| Thu | Mar 19 | 9 | Cart Service: MongoDB setup + schema design + API implementation |
+| Fri | Mar 20 | 9 | Cart Service: complete APIs (add/remove/update) + Kafka producer for cart events |
+| Sat | Mar 21 | 11 | Kafka integration across services + Spring Kafka producer/consumer wiring |
+| Sun | Mar 22 | 12 | Deploy Cart Service to EKS + AWS MSK setup |
+
+**Phase 2 Deliverable:** Cart Service with MongoDB + Kafka event-driven communication
+
+> **Trade-off:** Redis caching for Cart is deferred — MongoDB alone is sufficient for capstone scope.
 
 #### 📚 Scaler HLD - Lecture 12: Kafka & Zookeeper
 **Topics Covered:**
@@ -560,22 +560,71 @@ GitOps repo
   - [Kafka vs RabbitMQ vs SQS](https://ably.com/topic/apache-kafka-vs-rabbitmq-vs-aws-sns-sqs)
   - [Zookeeper Design Goals](https://zookeeper.apache.org/doc/current/zookeeperOver.html#sc_designGoals)
 
-**Month 2 Milestone:**
+---
+
+#### Phase 3: Order Service + Saga Pattern (Mar 23-24)
+
+| Day | Date | Hours | Task |
+|-----|------|-------|------|
+| Mon | Mar 23 | 9 | Scaler L20 (Distributed Transactions, morning compressed) + Order Service: MySQL schema + API implementation |
+| Tue | Mar 24 | 9 | Order Service: Saga pattern (orchestration) + Kafka integration (order→payment flow) |
+
+**Phase 3 Deliverable:** Order Service with Saga-based distributed transaction flow
+
+---
+
+#### Phase 4: Payment + Notification Services (Mar 25-27)
+
+| Day | Date | Hours | Task |
+|-----|------|-------|------|
+| Wed | Mar 25 | 9 | Payment Service: MySQL schema + mock payment gateway + Kafka producer (payment confirmed events) |
+| Thu | Mar 26 | 9 | Payment Service: complete payment→order Kafka flow + error handling |
+| Fri | Mar 27 | 9 | Notification Service: Kafka consumer + email notifications (console/log output, SES integration optional) |
+
+**Phase 4 Deliverable:** Payment Service (mock gateway) + Notification Service (Kafka consumer)
+
+> **Trade-offs:**
+> - Payment Service uses a mock gateway — simulates payment confirmation via Kafka events, no real payment provider integration
+> - Notification Service logs to console — SES integration is optional stretch goal
+
+---
+
+#### Phase 5: Deployment + Report (Mar 28-31)
+
+| Day | Date | Hours | Task |
+|-----|------|-------|------|
+| Sat | Mar 28 | 11 | Deploy remaining services to EKS (Order, Payment, Notification) + end-to-end testing |
+| Sun | Mar 29 | 12 | End-to-end flow testing + capture benchmarks + screenshots for report |
+| Mon | Mar 30 | 9 | Capstone report writing (architecture, design decisions, benchmarks) |
+| Tue | Mar 31 | 9 | Capstone report finalization + submission |
+
+**Phase 5 Deliverable:** All services deployed + capstone report submitted
+
+> **Important:** Capture screenshots and document architecture decisions during each phase — don't leave all report writing for Mar 30-31.
+
+---
+
+**Compressed Sprint Milestone (Mar 31):**
 ```
 ✅ 2 microservices on EKS (User, Product) — with Helm charts, db-init hooks, ExternalSecrets
 ✅ GitHub Actions CI/CD pipeline (Build → ECR → Helm deploy)
-⏳ Kong API Gateway routing traffic
-⏳ Elasticsearch-powered product search
-⏳ Kafka for async communication
+⏳ Elasticsearch-powered product search (with MySQL vs ES benchmark)
+⏳ Kafka for async communication across services
 ⏳ Cart Service with MongoDB
-📊 Baseline benchmarks captured for all deployed services
+⏳ Order Service with Saga pattern
+⏳ Payment Service (mock gateway + Kafka events)
+⏳ Notification Service (Kafka consumer)
+⏳ All services deployed to EKS
+⏳ Capstone report submitted
 ```
 
 ---
 
 ## Post 2-Months: Remaining Work (Month 3-4)
 
-### Week 9-10: Order Service + Saga Pattern (~60 hours estimated)
+> **Note:** Order Service, Payment Service, and Notification Service have been pulled into the compressed sprint (Mar 14-31) above due to capstone deadline of Mar 31. The lecture materials below remain as reference for the compressed schedule.
+
+### Lecture Reference: Distributed Transactions (for Order Service — Phase 3)
 
 #### 📚 Scaler HLD - Lecture 20: Distributed Transactions
 **Topics Covered:**
@@ -598,7 +647,7 @@ GitOps repo
   - [CQRS - Martin Fowler](https://martinfowler.com/bliki/CQRS.html)
   - [Two Phase Commit](https://www.youtube.com/watch?v=-_rdWB9hN1c)
 
-### Week 11-12: Payment + Notification + Redis (~60 hours estimated)
+### Lecture Reference: CAP/PACELC (supplementary reading)
 
 #### 📚 Scaler HLD - Lecture 6: CAP/PACELC + Replication
 **Topics Covered:**
@@ -618,11 +667,11 @@ GitOps repo
 - Resources:
   - [Google Spanner vs CAP](https://www.youtube.com/watch?v=oeycOVX70aE)
 
-### Week 13-14: Performance Benchmarking & Optimization (~70 hours) — Month 4
+### Post-Capstone: Performance Benchmarking & Optimization (~70 hours)
 
-Performance benchmarking is critical for the capstone report's **Feature Development Process** section and demonstrates real engineering value.
+Performance benchmarking is critical for interview preparation and demonstrates real engineering value. This was originally Week 13-14 but is now deferred to after capstone submission.
 
-> **Timeline:** This is Month 4, after all services are built. However, you should capture **baseline metrics** during development (see Incremental Benchmarking below).
+> **Timeline:** After capstone submission (Apr 1 onwards). Capture **baseline metrics** during the compressed sprint where possible (especially MySQL vs ES benchmark).
 
 #### Incremental Benchmarking Strategy
 
