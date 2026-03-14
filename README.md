@@ -449,15 +449,15 @@ GitOps repo
 ### Week 7: Elasticsearch Integration (~68 hours)
 **Mar 19 - Mar 25, 2026**
 
-| Day | Date | Hours | Task |
-|-----|------|-------|------|
-| Thu | Mar 19 | 9 | Scaler L9: Typeahead design + Scaler L13: Elasticsearch deep dive |
-| Fri | Mar 20 | 9 | ES Docker local setup + basic queries |
-| Sat | Mar 21 | 11 | Implement SearchServiceESImpl + index mapping |
-| Sun | Mar 22 | 12 | Index products + test search + fuzzy matching |
-| Mon | Mar 23 | 9 | Relevance tuning + autocomplete suggestions |
-| Tue | Mar 24 | 9 | Deploy ES to AWS OpenSearch + configure VPC access |
-| Wed | Mar 25 | 9 | Benchmark: MySQL LIKE vs Elasticsearch latency |
+| Day | Date | Hours | Task                                                                |
+|-----|------|-------|---------------------------------------------------------------------|
+| Thu | Mar 19 | 9 | ✅ Scaler L9: Typeahead design + Scaler L13: Elasticsearch deep dive |
+| Fri | Mar 20 | 9 | ES Docker local setup + basic queries                               |
+| Sat | Mar 21 | 11 | Implement SearchServiceESImpl + index mapping                       |
+| Sun | Mar 22 | 12 | Index products + test search + fuzzy matching                       |
+| Mon | Mar 23 | 9 | Relevance tuning + autocomplete suggestions                         |
+| Tue | Mar 24 | 9 | Deploy ES to AWS OpenSearch + configure VPC access                  |
+| Wed | Mar 25 | 9 | Benchmark: MySQL LIKE vs Elasticsearch latency                      |
 
 #### 📚 Scaler HLD - Lecture 9: Typeahead (Google, Amazon)
 **Topics Covered:**
