@@ -77,12 +77,18 @@ Based on the PRD/HLD and current progress.
 - ✅ User Management Service (userservice) — deployed on EKS
 - ✅ Product Catalog Service (productservice) — deployed on EKS
 - ✅ Docker containerization
-- ✅ Terraform IaC (VPC, EKS, RDS, ECR, Secrets Manager, KMS)
+- ✅ Terraform IaC (VPC, EKS, RDS, ECR, Secrets Manager, KMS, OpenSearch)
 - ✅ Helm charts with db-init hooks + ExternalSecrets
 - ✅ GitHub Actions CI/CD (Build → ECR → Helm deploy)
 - ✅ Automated API test suite (29 endpoints passing)
 - ✅ Scaler HLD lectures 1-4, 9, 13, 18-19
-- ⏳ Next: Compressed sprint to complete all remaining services by Mar 31 (capstone deadline)
+- ✅ Elasticsearch/OpenSearch integration — full-text, fuzzy, description search, autocomplete
+- ✅ Event-driven indexing (Spring Events + @Async) with real-time MySQL → OpenSearch sync
+- ✅ AWS OpenSearch deployed via Terraform (t3.small.search, VPC-internal)
+- ✅ ES 9.x client compatibility with OpenSearch 2.x (header overrides + response interceptor)
+- ✅ Automated ES integration tests on EKS (44/44 passing via GitHub Actions)
+- ✅ OpenSearch benchmark: 99.3% success, 27ms median (vs MySQL LIKE: 0% success, ~6min/query)
+- ⏳ Next: Kafka + Cart Service, then Order/Payment/Notification services by Mar 31
 
 ---
 
@@ -456,11 +462,12 @@ GitOps repo
 | Day | Date | Hours | Task |
 |-----|------|-------|------|
 | Sat | Mar 14 | 11 | ✅ Scaler L9 (Typeahead) + ✅ Scaler L13 (Elasticsearch) + ES Docker local setup |
-| Sun | Mar 15 | 12 | Implement SearchServiceESImpl + index mapping + index products + fuzzy matching |
-| Mon | Mar 16 | 9 | Relevance tuning + autocomplete + benchmark MySQL LIKE vs ES |
-| Tue | Mar 17 | 9 | Deploy ES to AWS OpenSearch + configure VPC access |
+| Sun | Mar 15 | 12 | ✅ Implement SearchServiceESImpl + index mapping + index products + fuzzy matching |
+| Sun | Mar 15 | - | ✅ Deploy ES to AWS OpenSearch + configure VPC access + ES 9.x compatibility fixes |
+| Sun | Mar 15 | - | ✅ Automated ES integration tests on EKS (44/44 passing) |
+| Mon | Mar 16 | 9 | ✅ OpenSearch benchmark: 99.3% success, 27ms median (13,000x improvement over MySQL) |
 
-**Phase 1 Deliverable:** Elasticsearch-powered product search with MySQL vs ES benchmark
+**Phase 1 Deliverable:** ✅ Elasticsearch-powered product search with MySQL vs ES benchmark
 
 #### 📚 Scaler HLD - Lecture 9: Typeahead (Google, Amazon)
 **Topics Covered:**
@@ -608,7 +615,9 @@ GitOps repo
 ```
 ✅ 2 microservices on EKS (User, Product) — with Helm charts, db-init hooks, ExternalSecrets
 ✅ GitHub Actions CI/CD pipeline (Build → ECR → Helm deploy)
-⏳ Elasticsearch-powered product search (with MySQL vs ES benchmark)
+✅ Elasticsearch-powered product search (with MySQL vs ES benchmark)
+✅ AWS OpenSearch deployed via Terraform + ES 9.x compatibility
+✅ Automated ES integration tests (44/44) + benchmark pipeline (99.3% success, 27ms median)
 ⏳ Kafka for async communication across services
 ⏳ Cart Service with MongoDB
 ⏳ Order Service with Saga pattern
