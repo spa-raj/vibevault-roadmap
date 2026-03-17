@@ -88,7 +88,16 @@ Based on the PRD/HLD and current progress.
 - ✅ ES 9.x client compatibility with OpenSearch 2.x (header overrides + response interceptor)
 - ✅ Automated ES integration tests on EKS (44/44 passing via GitHub Actions)
 - ✅ OpenSearch benchmark: 99.3% success, 27ms median (vs MySQL LIKE: 0% success, ~6min/query)
-- ⏳ Next: Kafka + Cart Service, then Order/Payment/Notification services by Mar 31
+- ✅ Scaler HLD lecture 12 (Kafka & Zookeeper/KRaft)
+- ✅ Cart Service — MongoDB (Atlas), Kafka producer, OAuth2, 52-test suite passing
+- ✅ Kafka events: ITEM_ADDED, ITEM_UPDATED, ITEM_REMOVED, CART_CLEARED, CHECKOUT_INITIATED
+- ✅ Cart isolation (multi-user) verified
+- ✅ In-cluster Kafka (KRaft single-node) for EKS deployment
+- ✅ Spring Boot 4.x: discovered `spring.mongodb` prefix change (undocumented)
+- ✅ Redis caching (cache-aside pattern) for cart reads with 30min TTL
+- ✅ Redis benchmark: MongoDB 6.2ms vs Redis 8.21ms median (local Docker — Redis helps in production with remote DB)
+- ✅ Helm chart + CI/CD for cartservice (deploy workflow with MongoDB Atlas secret sync)
+- ⏳ Next: Order Service → Payment Service → Notification Service → Kong API Gateway → Deploy all → Capstone report
 
 ---
 
