@@ -164,3 +164,53 @@ The old prefix `spring.data.mongodb.*` is silently ignored — no deprecation wa
 **Env var mapping also changed:** `SPRING_MONGODB_URI` (not `SPRING_DATA_MONGODB_URI`).
 
 This is not documented in the Spring Boot 4.0 migration guide as of March 2026.
+
+## Redis Caching for Cart Service
+
+### Why Redis
+Every `GET /cart` request hits MongoDB directly. With Redis as a cache-aside layer, repeated cart reads (e.g., user browsing, page refreshes) are served from memory instead of disk.
+
+### Cache-Aside Pattern
+1. **Read:** Check Redis → if cache hit, return cached cart. If miss, query MongoDB → store in Redis → return.
+2. **Write:** On any cart mutation (add/update/remove/clear/checkout) → update MongoDB → invalidate Redis cache.
+3. **TTL:** 30 minutes — carts expire from cache after inactivity. MongoDB remains the source of truth.
+
+### Actual Benchmark Results
+
+| Metric | MongoDB Direct | Redis Cached |
+|--------|---------------|-------------|
+| **Median** | **6.2ms** | **8.21ms** |
+| Avg | 6.06ms | 7.27ms |
+| p(90) | 9.54ms | 10.93ms |
+| p(95) | 11.25ms | 12.74ms |
+| p(99) | 16.45ms | 17.11ms |
+| Max | 22.49ms | 21.59ms |
+| Success | 100% (2166 iters) | 100% (2160 iters) |
+| Throughput | 14.5 req/s | 14.4 req/s |
+
+### Benchmark Approach
+- k6 load test: 1→5→15 VUs over 2.5 minutes, `GET /cart` with 0.5s sleep
+- Cart pre-populated with 5 items (realistic cart size)
+- Both benchmarks run locally on Docker Compose (same machine, fair comparison)
+- MongoDB baseline run on a separate branch without Redis code (no reconnection overhead)
+
+### Key Finding: MongoDB was FASTER than Redis locally
+
+**Why Redis didn't improve performance in this benchmark:**
+1. **Same Docker network** — both MongoDB and Redis have near-zero network latency from the app container. In production with separate servers, Redis's in-memory reads would dominate.
+2. **Serialization overhead** — the Redis path serializes Cart to JSON (via Jackson), writes to Redis, then on read deserializes back. MongoDB's WiredTiger engine serves the small document from its own in-memory cache.
+3. **Small documents** — cart with 5 items is ~1KB. MongoDB serves this from memory just as fast as Redis. Redis shines with larger payloads or complex queries.
+4. **Single-user benchmark** — all requests hit the same cart. MongoDB's query cache is fully warmed. With many users and larger datasets, MongoDB would degrade while Redis stays O(1).
+
+### When Redis caching WOULD help
+- **Remote database** — MongoDB on a separate server (e.g., Atlas cloud) adds 5-15ms network latency per query. Redis on the same host eliminates this.
+- **Large cart documents** — carts with 50+ items, product images, nested data
+- **High read-to-write ratio** — e.g., user refreshing cart page 100 times between each add. Each refresh is a Redis GET instead of a MongoDB query.
+- **Multiple services reading** — if Order Service and Notification Service also need cart data, Redis serves as a shared cache.
+- **Scale** — with 10K+ concurrent users, MongoDB connection pool becomes a bottleneck. Redis handles 100K+ ops/sec on a single node.
+
+### Report wording suggestion
+> "Implemented cache-aside pattern with Redis for cart reads. In local Docker benchmarking, MongoDB (6.2ms median) slightly outperformed Redis (8.21ms median) due to co-located containers and small document sizes. This demonstrates that caching adds value primarily when the database is remote or under high concurrent load — not as a blanket optimization. The Redis implementation is production-ready for deployment with AWS ElastiCache where network latency to MongoDB Atlas would make caching beneficial."
+
+### Production note
+Local Docker uses `redis:7-alpine`. Production would use AWS ElastiCache (Redis) within the VPC for low-latency, managed caching with automatic failover.
