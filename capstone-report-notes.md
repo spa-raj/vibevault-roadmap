@@ -147,3 +147,20 @@ The project uses **JSON serialization** (`JsonSerializer`) for Kafka messages. T
 
 ### Report wording suggestion
 > "Kafka messages use JSON serialization for development simplicity and debuggability. Production systems at scale (e.g., Netflix, LinkedIn) typically use Avro with Confluent Schema Registry for compact binary payloads and schema evolution guarantees (backward/forward compatibility). This would be the recommended upgrade path for VibeVault at scale."
+
+## Spring Boot 4.x — MongoDB Property Prefix Change
+
+Spring Boot 4.x changed the MongoDB configuration property prefix:
+
+| Version | Prefix | Example |
+|---------|--------|---------|
+| Spring Boot 3.x | `spring.data.mongodb.*` | `spring.data.mongodb.uri=mongodb://...` |
+| Spring Boot 4.x | `spring.mongodb.*` | `spring.mongodb.uri=mongodb://...` |
+
+The old prefix `spring.data.mongodb.*` is silently ignored — no deprecation warning, no error. MongoDB defaults to `localhost:27017` and the application appears to work but connects to the wrong host in Docker/K8s.
+
+**How we discovered it:** Extracted the `MongoProperties.class` bytecode from the Spring Boot 4.0.3 JAR and found `@ConfigurationProperties` prefix set to `spring.mongodb` instead of `spring.data.mongodb`.
+
+**Env var mapping also changed:** `SPRING_MONGODB_URI` (not `SPRING_DATA_MONGODB_URI`).
+
+This is not documented in the Spring Boot 4.0 migration guide as of March 2026.
