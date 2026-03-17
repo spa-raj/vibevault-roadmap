@@ -130,3 +130,20 @@ Same VU ramp pattern as `mysql-baseline-light.js` (1→5→15 VUs) for fair comp
 
 ### Report wording suggestion
 > "Benchmarks run on `t3.small.search` (2 vCPU, 2 GB RAM). Production workloads would use `r6g.large` or similar for lower latency. The relative improvement over MySQL LIKE queries is the key metric — OpenSearch provides sub-second search on 2M products where MySQL was unable to serve even a single concurrent search request without service degradation."
+
+## Kafka Serialization Choice
+
+### Why JSON over Avro/Protobuf
+
+The project uses **JSON serialization** (`JsonSerializer`) for Kafka messages. This was a deliberate choice:
+
+| Format | Payload Size | Schema Enforcement | Setup Complexity | Debugging |
+|--------|-------------|-------------------|-----------------|-----------|
+| **JSON** | Larger | None (implicit) | Minimal — works out of the box with Spring Kafka | Human-readable via `kafka-console-consumer` |
+| **Avro** | 50-70% smaller | Schema Registry enforces contracts | Requires Confluent Schema Registry + `.avsc` schema files | Binary — requires schema to decode |
+| **Protobuf** | Compact binary | Generated code | Requires `.proto` files + code generation | Binary — requires proto definition |
+
+**Decision rationale:** JSON was chosen for development velocity — no Schema Registry infrastructure to set up, easy to debug by reading raw messages, and Spring Kafka has built-in `JsonSerializer` support.
+
+### Report wording suggestion
+> "Kafka messages use JSON serialization for development simplicity and debuggability. Production systems at scale (e.g., Netflix, LinkedIn) typically use Avro with Confluent Schema Registry for compact binary payloads and schema evolution guarantees (backward/forward compatibility). This would be the recommended upgrade path for VibeVault at scale."
