@@ -97,7 +97,19 @@ Based on the PRD/HLD and current progress.
 - ✅ Redis caching (cache-aside pattern) for cart reads with 30min TTL
 - ✅ Redis benchmark: MongoDB 6.2ms vs Redis 8.21ms median (local Docker — Redis helps in production with remote DB)
 - ✅ Helm chart + CI/CD for cartservice (deploy workflow with MongoDB Atlas secret sync)
-- ⏳ Next: Order Service → Payment Service → Notification Service → Kong API Gateway → Deploy all → Capstone report
+- ✅ Redis disabled in cartservice (slower than MongoDB locally — 8.21ms vs 6.2ms), no-op cache fallback
+- ✅ Order Service — MySQL, Kafka consumer (CHECKOUT_INITIATED → order creation), Saga pattern (payment events)
+- ✅ Kafka events: ORDER_CREATED, ORDER_CONFIRMED, ORDER_CANCELLED published to order-events topic
+- ✅ Idempotent order creation via unique cart_event_id constraint
+- ✅ REST API: GET /orders (paginated), GET /orders/{id} (owner-only, returns 404 for non-owner)
+- ✅ OAuth2 JWT security, AuditorAware from JWT subject, @EntityGraph for eager item fetch
+- ✅ JacksonJsonDeserializer/JacksonJsonSerializer (non-deprecated Jackson 3, Spring Boot 4.x)
+- ✅ Docker + docker-compose (shares Kafka from cartservice via vibevault-network)
+- ✅ Helm chart with Flyway init containers, db-init-hook, ExternalSecret for DB credentials
+- ✅ CI/CD: ci.yaml (PR tests), deploy.yaml (manual EKS with dynamic RDS endpoint)
+- ✅ 16 unit tests (11 service + 4 controller + 1 context) + 37 API integration tests passing
+- ✅ Spring Boot 4.x gotchas: WebMvcTest moved package, @NullMarked on repositories, JSpecify annotations
+- ⏳ Next: Payment Service → Notification Service → Kong API Gateway → Deploy all → Capstone report
 
 ---
 
@@ -578,14 +590,13 @@ GitOps repo
 
 ---
 
-#### Phase 3: Order Service + Saga Pattern (Mar 23-24)
+#### Phase 3: Order Service + Saga Pattern ✅ (Completed Mar 19)
 
 | Day | Date | Hours | Task |
 |-----|------|-------|------|
-| Mon | Mar 23 | 9 | Scaler L20 (Distributed Transactions, morning compressed) + Order Service: MySQL schema + API implementation |
-| Tue | Mar 24 | 9 | Order Service: Saga pattern (orchestration) + Kafka integration (order→payment flow) |
+| Wed | Mar 19 | 10 | Order Service: all 8 issues completed — scaffolding, schema, Kafka consumers, REST API, security, Docker, Helm, CI/CD, 16 unit tests + 37 API tests |
 
-**Phase 3 Deliverable:** Order Service with Saga-based distributed transaction flow
+**Phase 3 Deliverable:** ✅ Order Service with Saga-based distributed transaction flow (CHECKOUT_INITIATED → PENDING → CONFIRMED/CANCELLED via payment events)
 
 ---
 
@@ -627,9 +638,9 @@ GitOps repo
 ✅ Elasticsearch-powered product search (with MySQL vs ES benchmark)
 ✅ AWS OpenSearch deployed via Terraform + ES 9.x compatibility
 ✅ Automated ES integration tests (44/44) + benchmark pipeline (99.3% success, 27ms median)
-⏳ Kafka for async communication across services
-⏳ Cart Service with MongoDB
-⏳ Order Service with Saga pattern
+✅ Kafka for async communication across services (KRaft single-node, in-cluster)
+✅ Cart Service with MongoDB (Atlas), 52-test suite, Redis disabled (benchmark: slower than MongoDB)
+✅ Order Service with Saga pattern — 16 unit tests + 37 API tests, Helm chart, CI/CD
 ⏳ Payment Service (mock gateway + Kafka events)
 ⏳ Notification Service (Kafka consumer)
 ⏳ All services deployed to EKS
