@@ -118,7 +118,14 @@ Based on the PRD/HLD and current progress.
 - ✅ Full saga verified end-to-end: cart checkout → order → Razorpay payment link → pay → webhook → CONFIRMED
 - ✅ 18 unit tests (13 service + 4 controller + 1 context) + 28 API integration tests passing
 - ✅ Docker + docker-compose, Helm chart, CI/CD for paymentgateway
-- ⏳ Next: Notification Service → Kong API Gateway → Deploy all → Capstone report
+- ✅ Notification Service — Kafka consumer for order + payment events, Console + AWS SES email
+- ✅ Console notification sender (always active) + SES email sender (conditional via config flag)
+- ✅ SES sandbox: verified email as sender/recipient, real email delivery tested
+- ✅ 16 unit tests (6 dispatcher + 5 order consumer + 4 payment consumer + 1 context)
+- ✅ E2E test: full saga with real Razorpay payment + SES email delivery verified
+- ✅ Docker, Helm chart (stateless — no DB/Flyway), CI/CD for notificationservice
+- ✅ **All 6 microservices complete** — userservice, productservice, cartservice, orderservice, paymentgateway, notificationservice
+- ⏳ Next: Deploy all to EKS → Capstone report
 
 ---
 
@@ -609,19 +616,20 @@ GitOps repo
 
 ---
 
-#### Phase 4: Payment Gateway + Notification Services ✅ Payment (Completed Mar 19)
+#### Phase 4: Payment Gateway + Notification Services ✅ (Completed Mar 20)
 
 | Day | Date | Hours | Task |
 |-----|------|-------|------|
 | Thu | Mar 19 | 12 | Payment Gateway: all 8 issues — Razorpay integration (test mode), Kafka saga, production hardening, 18 unit tests + 28 API tests |
-| Fri | Mar 20 | 9 | Notification Service: Kafka consumer + console/log notifications |
+| Fri | Mar 20 | 10 | Notification Service: all 6 issues — Kafka consumers, Console + AWS SES email, Docker, Helm, CI/CD, 16 unit tests + E2E test |
 
-**Phase 4 Deliverable:** ✅ Payment Gateway with **real Razorpay integration** (test mode) — not a mock! Full saga: cart → order → Razorpay payment link → pay → webhook → CONFIRMED
+**Phase 4 Deliverable:** ✅ All microservices complete! Full saga verified end-to-end with real Razorpay payment + SES email delivery.
 
 > **Exceeded original plan:**
 > - Originally planned mock gateway — instead integrated real Razorpay SDK with payment links and webhook verification
 > - Production hardening: state machine, idempotency, concurrent safety, fail-fast config validation
-> - Notification Service logs to console — SES integration is optional stretch goal
+> - Originally planned console-only notifications — instead added real AWS SES email delivery with verified sandbox mode
+> - E2E test verifies full saga: cart checkout → order → Razorpay payment → webhook → notifications (console + email)
 
 ---
 
@@ -651,7 +659,7 @@ GitOps repo
 ✅ Cart Service with MongoDB (Atlas), 52-test suite, Redis disabled (benchmark: slower than MongoDB)
 ✅ Order Service with Saga pattern — 16 unit tests + 37 API tests, Helm chart, CI/CD
 ✅ Payment Gateway with real Razorpay integration (test mode) — 18 unit tests + 28 API tests, full saga verified
-⏳ Notification Service (Kafka consumer)
+✅ Notification Service — Console + AWS SES email, 16 unit tests, E2E verified with real email
 ⏳ All services deployed to EKS
 ⏳ Capstone report submitted
 ```
