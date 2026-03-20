@@ -315,3 +315,82 @@ Userservice scaled to 1 replica for OAuth2 session consistency during the capsto
 - Fix: `aws ec2 modify-instance-metadata-options --instance-id $ID --http-put-response-hop-limit 2`
 - This is needed for SES (and any AWS SDK call using node IAM role from pods)
 - Production solution: use IRSA (IAM Roles for Service Accounts) instead of node role — avoids IMDS entirely, more secure, pod-specific permissions
+
+---
+
+## Low-Level Design Evaluation
+
+### Design Patterns Used
+
+1. **Strategy Pattern**
+   - `PaymentGateway` interface → `RazorpayPaymentGateway` (extensible for Stripe)
+   - `NotificationSender` interface → `ConsoleNotificationSender` + `SesNotificationSender`
+   - `PaymentGatewaySelector` for runtime gateway selection
+
+2. **Saga Pattern (Choreography)**
+   - Cart checkout → ORDER_CREATED → payment link → PAYMENT_CONFIRMED → ORDER_CONFIRMED
+   - Each service reacts to events independently, no central orchestrator
+   - Idempotent at each step via unique constraints (cart_event_id, order_event_id)
+
+3. **Repository Pattern**
+   - JPA repositories with custom derived queries
+   - `@EntityGraph` for eager fetching (prevents N+1 with `open-in-view=false`)
+   - `@NullMarked` for Spring Framework 7.0 compatibility
+
+4. **DTO Pattern**
+   - Separate response DTOs with static `fromEntity()` factory methods
+   - No JPA entity leakage to API layer
+   - `PaymentTransitionResult` record for state change signaling
+
+5. **Builder Pattern**
+   - Lombok `@Builder` on entities and DTOs for clean construction
+
+6. **Template Method (BaseModel)**
+   - Shared `@MappedSuperclass` across all MySQL services
+   - UUID PK, audit fields (`@CreatedDate`, `@LastModifiedDate`, `@CreatedBy`, `@LastModifiedBy`)
+   - Soft delete (`isDeleted`), optimistic locking (`@Version`)
+
+### Database Design Strengths
+- **Database per Service** — userservice/productservice/orderservice/paymentgateway each have their own MySQL database, cartservice uses MongoDB Atlas
+- **Idempotency keys** — `cart_event_id` (unique) on orders, `order_event_id` (unique) on payments prevent duplicate processing
+- **Composite indexes** matching actual query patterns (e.g., `user_id, is_deleted, created_at DESC`)
+- **Foreign keys** — Order ↔ OrderItem with `CascadeType.ALL` + `orphanRemoval`
+- **State machine enforcement** — `InvalidPaymentStateException` prevents illegal transitions (confirm FAILED, fail CONFIRMED)
+
+### Event-Driven Architecture
+- Clear topic ownership: cartservice → `cart-events`, orderservice → `order-events`, paymentgateway → `payment-events`
+- Event DTOs separate from domain models
+- `JacksonJsonDeserializer` (non-deprecated Jackson 3) with `USE_TYPE_INFO_HEADERS=false`
+- `PaymentTransitionResult` prevents duplicate downstream events on webhook replay
+- Kafka send future observed with `whenComplete` callback for reliable logging
+
+### Production Enhancements (Future Work)
+
+1. **Transactional Outbox Pattern**
+   - Currently: DB commit + Kafka publish are not atomic. If Kafka fails after DB commit, downstream services miss the event.
+   - Enhancement: write events to an outbox table within the same DB transaction, then a separate process polls and publishes to Kafka (Debezium CDC or polling publisher).
+
+2. **CQRS (Command Query Responsibility Segregation)**
+   - Currently: same JPA entities serve reads and writes.
+   - Enhancement: separate read-optimized views (e.g., denormalized order + items in a single document) for high-traffic read endpoints.
+
+3. **Formal State Machine**
+   - Currently: payment status transitions enforced with if/throw in service code.
+   - Enhancement: Spring State Machine or enum-based transition map for explicit, testable state transitions.
+
+4. **Domain Events (Internal)**
+   - Currently: Kafka consumers directly call service methods.
+   - Enhancement: publish Spring Application Events internally, then an adapter translates to Kafka. Improves testability and decouples domain logic from infrastructure.
+
+5. **BaseModel Equals/HashCode**
+   - Currently: Lombok-generated with field exclusions — can cause issues with detached entities in Sets/Maps.
+   - Enhancement: ID-based equality (compare by UUID only, handle null ID for transient entities).
+
+6. **Cart Event Persistence**
+   - Currently: cart events are fire-and-forget to Kafka.
+   - Enhancement: persist checkout intent to MongoDB first, then publish. Ensures no lost events if Kafka is temporarily unavailable.
+
+### Report Wording Suggestion
+> "The low-level design follows established microservices patterns: Strategy pattern for payment gateway abstraction and notification delivery, Repository pattern with JPA for data access, and the Saga pattern (choreography-based) for distributed transactions. Each service maintains clear boundaries with separate databases (Database per Service pattern) and communicates exclusively through Kafka events. Idempotency is enforced at the database level via unique constraints on event IDs, and a formal state machine prevents illegal payment status transitions. The BaseModel superclass provides consistent auditing, soft delete, and optimistic locking across all MySQL-backed services.
+>
+> For production, the design would benefit from the Transactional Outbox pattern to guarantee exactly-once event delivery, CQRS for read-heavy endpoints, and internal domain events for better testability and infrastructure decoupling."
