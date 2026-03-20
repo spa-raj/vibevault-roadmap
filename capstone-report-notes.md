@@ -214,3 +214,24 @@ Every `GET /cart` request hits MongoDB directly. With Redis as a cache-aside lay
 
 ### Production note
 Local Docker uses `redis:7-alpine`. Production would use AWS ElastiCache (Redis) within the VPC for low-latency, managed caching with automatic failover.
+
+---
+
+## Notification Service — Future Enhancements
+
+### Notification Persistence (planned for production)
+The current notification service is stateless — it consumes Kafka events and delivers notifications (console + SES email) without storing them. In production, this should be enhanced with:
+
+1. **MySQL database** — store notification records with delivery status (PENDING, SENT, FAILED)
+2. **Notification history API** — `GET /notifications` for users to view their notification history
+3. **Retry mechanism** — re-send failed SES emails with exponential backoff
+4. **Delivery tracking** — track which channel (email/SMS/push) delivered successfully
+5. **User preferences** — allow users to opt-in/out of specific notification types
+
+### Report wording suggestion
+> "The notification service implements an event-driven architecture consuming from order-events and payment-events Kafka topics. It supports multiple delivery channels via the Strategy pattern (NotificationSender interface) — currently Console (always active) and AWS SES email (conditional). The stateless design simplifies deployment and scaling. For production, notification persistence with delivery tracking and retry mechanisms would be added to ensure guaranteed delivery and provide users with notification history."
+
+### SES Sandbox Limitations
+- In SES sandbox mode, both sender and recipient must be verified email addresses
+- `SES_TO_EMAIL` override routes all emails to a verified address for testing
+- Production would require requesting SES production access and domain verification for sending to any email
