@@ -109,7 +109,16 @@ Based on the PRD/HLD and current progress.
 - ✅ CI/CD: ci.yaml (PR tests), deploy.yaml (manual EKS with dynamic RDS endpoint)
 - ✅ 16 unit tests (11 service + 4 controller + 1 context) + 37 API integration tests passing
 - ✅ Spring Boot 4.x gotchas: WebMvcTest moved package, @NullMarked on repositories, JSpecify annotations
-- ⏳ Next: Payment Service → Notification Service → Kong API Gateway → Deploy all → Capstone report
+- ✅ Payment Gateway — Real Razorpay integration (test mode), Strategy pattern, Kafka saga
+- ✅ Razorpay SDK: payment link creation, webhook signature verification, test card payment
+- ✅ Production hardening: persist-before-link, DataIntegrityViolation handling, state machine enforcement
+- ✅ PaymentTransitionResult to prevent duplicate downstream events on webhook replay
+- ✅ Kafka: OrderEventConsumer (ORDER_CREATED → payment link), PaymentEventProducer (CONFIRMED/FAILED)
+- ✅ Webhook: 200 for state conflicts, 400 for bad payloads/missing headers, 500 for transient failures
+- ✅ Full saga verified end-to-end: cart checkout → order → Razorpay payment link → pay → webhook → CONFIRMED
+- ✅ 18 unit tests (13 service + 4 controller + 1 context) + 28 API integration tests passing
+- ✅ Docker + docker-compose, Helm chart, CI/CD for paymentgateway
+- ⏳ Next: Notification Service → Kong API Gateway → Deploy all → Capstone report
 
 ---
 
@@ -600,18 +609,18 @@ GitOps repo
 
 ---
 
-#### Phase 4: Payment + Notification Services (Mar 25-27)
+#### Phase 4: Payment Gateway + Notification Services ✅ Payment (Completed Mar 19)
 
 | Day | Date | Hours | Task |
 |-----|------|-------|------|
-| Wed | Mar 25 | 9 | Payment Service: MySQL schema + mock payment gateway + Kafka producer (payment confirmed events) |
-| Thu | Mar 26 | 9 | Payment Service: complete payment→order Kafka flow + error handling |
-| Fri | Mar 27 | 9 | Notification Service: Kafka consumer + email notifications (console/log output, SES integration optional) |
+| Thu | Mar 19 | 12 | Payment Gateway: all 8 issues — Razorpay integration (test mode), Kafka saga, production hardening, 18 unit tests + 28 API tests |
+| Fri | Mar 20 | 9 | Notification Service: Kafka consumer + console/log notifications |
 
-**Phase 4 Deliverable:** Payment Service (mock gateway) + Notification Service (Kafka consumer)
+**Phase 4 Deliverable:** ✅ Payment Gateway with **real Razorpay integration** (test mode) — not a mock! Full saga: cart → order → Razorpay payment link → pay → webhook → CONFIRMED
 
-> **Trade-offs:**
-> - Payment Service uses a mock gateway — simulates payment confirmation via Kafka events, no real payment provider integration
+> **Exceeded original plan:**
+> - Originally planned mock gateway — instead integrated real Razorpay SDK with payment links and webhook verification
+> - Production hardening: state machine, idempotency, concurrent safety, fail-fast config validation
 > - Notification Service logs to console — SES integration is optional stretch goal
 
 ---
@@ -641,7 +650,7 @@ GitOps repo
 ✅ Kafka for async communication across services (KRaft single-node, in-cluster)
 ✅ Cart Service with MongoDB (Atlas), 52-test suite, Redis disabled (benchmark: slower than MongoDB)
 ✅ Order Service with Saga pattern — 16 unit tests + 37 API tests, Helm chart, CI/CD
-⏳ Payment Service (mock gateway + Kafka events)
+✅ Payment Gateway with real Razorpay integration (test mode) — 18 unit tests + 28 API tests, full saga verified
 ⏳ Notification Service (Kafka consumer)
 ⏳ All services deployed to EKS
 ⏳ Capstone report submitted
@@ -1149,21 +1158,21 @@ For each optimization, document:
 
 ## Curriculum ↔ Project Mapping
 
-| Scaler HLD Lecture | Topic | VibeVault Application | When | Status |
-|--------------------|-------|----------------------|------|--------|
-| 1 | System Design 101, DNS, LB | AWS ALB, Route53, Health checks | Week 1 | ✅ Studied |
-| 2 | Consistent Hashing, Sharding | Database design, future scaling | Week 1 | ✅ Studied |
-| 3-4 | Caching, Redis | Redis for Cart, search cache | Week 4 | ✅ Studied |
-| 5 | Facebook News Feed | Fan-out pattern understanding | Week 4 | |
-| 6 | CAP/PACELC, Replication | RDS Read Replicas | Post Month 2 | |
-| 7 | SQL vs NoSQL | MySQL vs MongoDB for Cart | Week 8 | |
-| 8 | Database Orchestration | RDS Multi-AZ, failover | Post Month 2 | |
-| 9 | Typeahead | Product suggestions | Week 7 | |
-| 12 | Kafka & Zookeeper | Event-driven architecture | Week 8 | |
-| 13 | Elasticsearch | Product full-text search | Week 7 | |
-| 18 | Microservices Architecture | VPC, service design | Week 2 | ✅ Studied |
-| 19 | Communication, Observability | gRPC/REST, ELK stack, tracing | Week 2 | ✅ Studied |
-| 20 | Distributed Transactions | Saga pattern for Order→Payment | Post Month 2 | |
+| Scaler HLD Lecture | Topic | VibeVault Application | When | Status     |
+|--------------------|-------|----------------------|------|------------|
+| 1 | System Design 101, DNS, LB | AWS ALB, Route53, Health checks | Week 1 | ✅ Studied  |
+| 2 | Consistent Hashing, Sharding | Database design, future scaling | Week 1 | ✅ Studied  |
+| 3-4 | Caching, Redis | Redis for Cart, search cache | Week 4 | ✅ Studied  |
+| 5 | Facebook News Feed | Fan-out pattern understanding | Week 4 |            |
+| 6 | CAP/PACELC, Replication | RDS Read Replicas | Post Month 2 |            |
+| 7 | SQL vs NoSQL | MySQL vs MongoDB for Cart | Week 8 |            |
+| 8 | Database Orchestration | RDS Multi-AZ, failover | Post Month 2 |            |
+| 9 | Typeahead | Product suggestions | Week 7 |            |
+| 12 | Kafka & Zookeeper | Event-driven architecture | Week 8 | ✅ Studied  |
+| 13 | Elasticsearch | Product full-text search | Week 7 | ✅ Studied  |
+| 18 | Microservices Architecture | VPC, service design | Week 2 | ✅ Studied  |
+| 19 | Communication, Observability | gRPC/REST, ELK stack, tracing | Week 2 | ✅ Studied  |
+| 20 | Distributed Transactions | Saga pattern for Order→Payment | Post Month 2 |            |
 
 ---
 
