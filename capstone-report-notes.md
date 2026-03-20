@@ -231,10 +231,31 @@ The current notification service is stateless — it consumes Kafka events and d
 ### Report wording suggestion
 > "The notification service implements an event-driven architecture consuming from order-events and payment-events Kafka topics. It supports multiple delivery channels via the Strategy pattern (NotificationSender interface) — currently Console (always active) and AWS SES email (conditional). The stateless design simplifies deployment and scaling. For production, notification persistence with delivery tracking and retry mechanisms would be added to ensure guaranteed delivery and provide users with notification history."
 
-### SES Sandbox Limitations
-- In SES sandbox mode, both sender and recipient must be verified email addresses
-- `SES_TO_EMAIL` override routes all emails to a verified address for testing
-- Production would require requesting SES production access and domain verification for sending to any email
+### SES Sandbox vs Production
+
+**Current (Sandbox mode):**
+- Both sender and recipient must be individually verified email addresses in AWS Console
+- `SES_TO_EMAIL` override available to route all emails to a verified address for testing
+- Kafka events contain `userId` (user's email) as recipient — works automatically when that email is SES-verified
+- Limited to 200 emails/day, 1 email/second
+
+**Production setup:**
+1. **Request SES production access** — removes sandbox restrictions, can send to any email
+2. **Domain verification** — verify `vibesvault.live` in SES with DKIM DNS records. Enables sending from any `@vibesvault.live` address (e.g., `notifications@vibesvault.live`)
+3. **Remove `SES_TO_EMAIL` override** — not needed since any email can receive
+4. **IRSA (IAM Roles for Service Accounts)** — replace node-level IAM policy with pod-specific IAM role. Only the notification service pod gets SES permissions, not all pods on the node
+5. **Bounce/complaint handling** — configure SES to send delivery notifications to an SNS topic for monitoring
+
+**Production email flow:**
+```
+Kafka event (userId=customer@gmail.com)
+  → SesNotificationSender
+  → From: notifications@vibesvault.live (domain-verified)
+  → To: customer@gmail.com (any email, no verification needed)
+```
+
+### Report wording suggestion
+> "Email notifications are delivered via AWS SES. In the current deployment, SES operates in sandbox mode — both sender and recipient must be verified. The notification service reads the recipient email directly from Kafka event payloads (`userId` field), enabling automatic delivery without hardcoded recipients. In production, SES production access would be requested and the sending domain (`vibesvault.live`) would be DKIM-verified, allowing emails to any customer address. Pod-level IAM permissions via IRSA would replace node-level policies for security isolation."
 
 ---
 
@@ -287,3 +308,10 @@ Userservice scaled to 1 replica for OAuth2 session consistency during the capsto
 - KRaft single-node (no Zookeeper)
 - TCP socket probes (exec probes with `kafka-topics --list` caused liveness failures due to timeout)
 - `KAFKA_PORT` env var explicitly unset to avoid deprecated config warning
+
+### EKS IMDS Hop Limit for SES
+- EKS nodes default IMDS hop limit to 1, which blocks pods from accessing node IAM credentials
+- Pods need hop limit 2 to reach the instance metadata service through the container network layer
+- Fix: `aws ec2 modify-instance-metadata-options --instance-id $ID --http-put-response-hop-limit 2`
+- This is needed for SES (and any AWS SDK call using node IAM role from pods)
+- Production solution: use IRSA (IAM Roles for Service Accounts) instead of node role — avoids IMDS entirely, more secure, pod-specific permissions
