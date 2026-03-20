@@ -235,3 +235,55 @@ The current notification service is stateless — it consumes Kafka events and d
 - In SES sandbox mode, both sender and recipient must be verified email addresses
 - `SES_TO_EMAIL` override routes all emails to a verified address for testing
 - Production would require requesting SES production access and domain verification for sending to any email
+
+---
+
+## OAuth2 Session Affinity — Scaling Limitation
+
+### Problem
+The userservice (OAuth2 authorization server) uses Spring Security's default in-memory HTTP sessions. The CSRF token generated during `GET /login` is stored in the pod's memory. With multiple replicas, the subsequent `POST /login` may hit a different pod that has no knowledge of the CSRF token, resulting in a 403 Forbidden.
+
+```
+Request 1: GET /login → Pod A → creates CSRF token in Pod A's memory
+Request 2: POST /login → Pod B → no CSRF token found → 403 Forbidden
+```
+
+### Current Solution
+Userservice scaled to 1 replica for OAuth2 session consistency during the capstone demo.
+
+### Production Solutions
+1. **Spring Session + Redis** — externalize session storage to Redis (AWS ElastiCache). All pods share the same session store. This is the industry standard approach.
+2. **Sticky sessions (session affinity)** — configure Kong or the load balancer to route all requests from the same client to the same pod using cookies. Works but reduces load distribution benefits.
+3. **Stateless CSRF** — use JWT-based CSRF tokens that encode the session state in the token itself, eliminating server-side session dependency.
+4. **Token-based auth flow** — replace session-based OAuth2 consent with a fully stateless flow (e.g., PKCE without server sessions).
+
+### Report wording suggestion
+> "The userservice OAuth2 authorization server is currently deployed with a single replica due to Spring Security's default in-memory session management. With multiple replicas, CSRF tokens stored in pod memory are not shared, causing authentication failures when requests are load-balanced across pods. In production, this would be resolved by externalizing session storage using Spring Session with Redis (AWS ElastiCache), enabling horizontal scaling of the OAuth2 server while maintaining session consistency."
+
+---
+
+## EKS Deployment Architecture Notes
+
+### Kong API Gateway
+- Kong Ingress Controller deployed via Helm on EKS
+- NLB (Network Load Balancer) with TLS termination via ACM certificate
+- TLS listener on port 443 created via AWS CLI (NLB annotations require AWS Load Balancer Controller for automatic SSL)
+- All services accessible via `https://www.vibesvault.live`
+- Razorpay webhook routed through Kong: `https://www.vibesvault.live/payments/webhook/razorpay`
+
+### Domain: vibesvault.live
+- Registered at name.com
+- DNS CNAME: `www.vibesvault.live` → Kong NLB hostname
+- ACM certificate for `www.vibesvault.live` + `vibesvault.live` (DNS validated)
+- Root domain (`vibesvault.live`) cannot use CNAME — would need Route53 ALIAS or Cloudflare
+
+### Infrastructure as Code
+- All infra deployed via GitHub Actions workflow (Terraform + post-apply K8s setup)
+- Staged Terraform apply: VPC+ECR → EKS → RDS+Secrets → Full
+- Post-apply: External Secrets Operator, DB init, Kafka, Kong
+- Each microservice deployed via its own GitHub Actions deploy workflow
+
+### Kafka on EKS
+- KRaft single-node (no Zookeeper)
+- TCP socket probes (exec probes with `kafka-topics --list` caused liveness failures due to timeout)
+- `KAFKA_PORT` env var explicitly unset to avoid deprecated config warning
