@@ -315,6 +315,45 @@ assert_status "GET /products/{id}" "200" "$STATUS"
 assert_body_contains "Product has correct name" "$PRODUCT_NAME" "$BODY"
 
 # --------------------------------------------------
+section "3b. Switch to Real User for Saga Flow"
+# --------------------------------------------------
+
+# Create CUSTOMER role + real user so notifications go to a real email
+ADMIN_LOGIN_RESP=$(curl -s -m 15 -X POST "${BASE_URL}/auth/login" \
+    -H "Content-Type: application/json" \
+    -d "{\"email\":\"${ADMIN_EMAIL}\",\"password\":\"${ADMIN_PASSWORD}\"}")
+ADMIN_JJWT=$(echo "$ADMIN_LOGIN_RESP" | python3 -c "import sys,json; print(json.load(sys.stdin)['token'])" 2>/dev/null || echo "")
+
+if [ -n "$ADMIN_JJWT" ]; then
+    request POST "${BASE_URL}/roles/create" "$(printf 'Authorization: %s\nContent-Type: application/json' "$ADMIN_JJWT")" '{"roleName":"CUSTOMER","description":"Customer role"}'
+    echo -e "  ${GREEN}OK${NC} CUSTOMER role ready"
+fi
+
+SAGA_EMAIL="${NOTIFICATION_EMAIL:-sparshraj90@gmail.com}"
+SAGA_PASSWORD="Test@1234"
+SAGA_PHONE="91$(date +%s | tail -c 9)"
+
+request POST "${BASE_URL}/auth/signup" "Content-Type: application/json" \
+    "{\"email\":\"${SAGA_EMAIL}\",\"password\":\"${SAGA_PASSWORD}\",\"name\":\"Sparsh Raj\",\"phone\":\"${SAGA_PHONE}\",\"role\":\"CUSTOMER\"}"
+if [ "$STATUS" = "201" ] || [ "$STATUS" = "409" ] || [ "$STATUS" = "400" ]; then
+    echo -e "  ${GREEN}OK${NC} Saga user ready (${SAGA_EMAIL})"
+fi
+
+echo "  Obtaining OAuth2 token for ${SAGA_EMAIL}..."
+SAGA_TOKEN=$(get_oauth2_token "$SAGA_EMAIL" "$SAGA_PASSWORD")
+
+if [[ "$SAGA_TOKEN" =~ ^eyJ.*\..*\..*$ ]]; then
+    echo -e "  ${GREEN}PASS${NC} Saga user token obtained (${SAGA_EMAIL})"
+    PASS=$((PASS + 1))
+    # Switch to saga user for cart/order/payment flow
+    AUTH_HEADERS="$(printf 'Authorization: Bearer %s\nContent-Type: application/json' "$SAGA_TOKEN")"
+    AUTH_ONLY="Authorization: Bearer $SAGA_TOKEN"
+    echo -e "  ${CYAN}Notifications will go to: ${SAGA_EMAIL}${NC}"
+else
+    echo -e "  ${YELLOW}WARN${NC} Could not get saga user token — continuing with admin"
+fi
+
+# --------------------------------------------------
 section "4. Cart Service — CRUD + Edge Cases"
 # --------------------------------------------------
 
